@@ -1,0 +1,14 @@
+{
+  "name": "halyard-googledrive-stream",
+  "private": true,
+  "version": "0.0.1",
+  "author": "QlikTech International AB",
+  "license": "MIT",
+  "dependencies": {
+    "passport": "^0.3.2",
+    "passport-google-oauth20": "^1.0.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
+    "request-promise-native": "^1.0.4"
+  }
+}

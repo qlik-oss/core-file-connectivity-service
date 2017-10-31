@@ -1,0 +1,12 @@
+{
+  "name": "halyard-onedrive-stream",
+  "private": true,
+  "version": "0.0.1",
+  "author": "QlikTech International AB",
+  "license": "MIT",
+  "dependencies": {
+    "passport": "^0.3.2",
+    "passport-onedrive": "0.0.4",
+    "request": "^2.81.0"
+  }
+}

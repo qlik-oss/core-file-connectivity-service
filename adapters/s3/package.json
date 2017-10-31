@@ -1,0 +1,12 @@
+{
+  "name": "halyard-s3-stream",
+  "private": true,
+  "version": "0.0.1",
+  "author": "QlikTech International AB",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.61.0",
+    "request": "^2.81.0",
+    "s3": "^4.4.0"
+  }
+}
