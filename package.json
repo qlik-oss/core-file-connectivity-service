@@ -7,13 +7,16 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "test": "aw-test-runner ./test --exit"
   },
   "devDependencies": {
+    "after-work.js": "^3.1.4",
     "eslint": "3.19.0",
     "eslint-config-airbnb-base": "11.1.3",
     "eslint-plugin-import": "2.2.0",
-    "halyard.js": "1.0.1"
+    "halyard.js": "1.0.1",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "koa": "^2.2.0",

@@ -19,7 +19,7 @@ function outhaul(options) {
     app.use(router.routes());
 
     router.get("/health", (ctx) => {
-        ctx.response.statusCode = 200;
+        ctx.response.body = "ok";
     });
 
     let appInstance;
@@ -32,7 +32,12 @@ function outhaul(options) {
         console.log(`GET ${uniqueUrl} registerd for ${connection}`);
 
         router.get(uniqueUrl, async (ctx) => {
-            ctx.response.body = await connection.getData();
+            if(connection.authenticated === undefined || connection.authenticated()){
+                ctx.response.body = await connection.getData();
+            }
+            else{
+                ctx.throw(401,  "Authentication is needed to access this connection.");
+            }
         });
 
         if(connection.authentication){
@@ -45,21 +50,23 @@ function outhaul(options) {
                 }
             });
 
-            router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategy().name, { scope: connection.scope ? connection.scope() : '' })(ctx, next));
+            // router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategy().name, { scope: connection.scope ? connection.scope() : '' })(ctx, next));
+            router.get(`${uniqueUrl}/authentication`, (ctx, next) => connection.authentication(ctx, next));
 
-            const callbackUrl = `/${connection.getName()}/authentication/callback`;
 
-            connection.initiatedPassportStrategy(`http://localhost:${port}${callbackUrl}`);
+            // const callbackUrl = `/${connection.getName()}/authentication/callback`;
+            //
+            // connection.initiatedPassportStrategy(`http://localhost:${port}${callbackUrl}`);
+            //
+            // router.get(callbackUrl, (ctx, next) => passport.authenticate(connection.getPassportStrategy().name, (err, profile) => {
+            //     if (profile) {
+            //         ctx.body = 'Success';
+            //     } else {
+            //         ctx.body = 'Failed to get profile';
+            //     }
+            // })(ctx, next));
 
-            router.get(callbackUrl, (ctx, next) => passport.authenticate(connection.getPassportStrategy().name, (err, profile) => {
-                if (profile) {
-                    ctx.body = 'Success';
-                } else {
-                    ctx.body = 'Failed to get profile';
-                }
-            })(ctx, next));
-
-            passport.use(connection.getPassportStrategy());
+            // passport.use(connection.getPassportStrategy());
         }
 
         return uniqueUrl;
@@ -67,7 +74,6 @@ function outhaul(options) {
 
     router.post('/connections/add', async (ctx) => {
         const input = ctx.request.body;
-        console.log(input);
 
         if(input.adapter){
             if(adapters[input.adapter]){
@@ -87,6 +93,7 @@ function outhaul(options) {
     function start() {
         appInstance = app.listen(port);
         console.log(`Started and listening to port ${port}`);
+        return appInstance;
     }
 
     function close() {
