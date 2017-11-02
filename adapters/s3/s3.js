@@ -19,15 +19,15 @@ function getData(accessKeyId, secretAccessKey, bucket, file, region) {
     {
       accessKeyId,
       secretAccessKey,
-      region: region || 'eu-west-2'
-    }
+      region: region || 'eu-west-2',
+    },
   );
 
   const s3 = new AWS.S3();
 
   const options = {
     Bucket: bucket,
-    Key: file
+    Key: file,
   };
 
   return s3.getObject(options).createReadStream();

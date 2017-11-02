@@ -8,6 +8,9 @@ class OneDrive {
     this.appSecret = appSecret;
     this.filePath = filePath;
     this.authorizationToken = '';
+    this.name = 'onedrive';
+    this.authentication = true;
+    this.scope = ['onedrive.readwrite'];
   }
 
   initiatedPassportStrategy(callbackUrl) {
@@ -16,7 +19,7 @@ class OneDrive {
     this.passportStrategy = new OneDriveStrategy({
       clientID: this.apiKey,
       clientSecret: this.appSecret,
-      callbackURL: callbackUrl
+      callbackURL: callbackUrl,
     },
       (accessToken, refreshToken, profile, done) => {
         that.accessToken = accessToken;
@@ -25,7 +28,7 @@ class OneDrive {
   }
 
   getName() {
-    return 'onedrive';
+    return this.name;
   }
 
   getData() {
@@ -33,11 +36,11 @@ class OneDrive {
   }
 
   authentication() {
-    return true;
+    return this.authentication;
   }
 
   scope() {
-    return ['onedrive.readwrite'];
+    return this.scope;
   }
 
   authenticated() {
@@ -53,8 +56,8 @@ OneDrive.getData = function getData(filePath, accessToken) {
   return request({
     url: `https://api.onedrive.com/v1.0/drive/root:${filePath}:/content`,
     headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 };
 

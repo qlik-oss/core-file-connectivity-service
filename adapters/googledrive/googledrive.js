@@ -7,6 +7,9 @@ class GoogleDrive {
     this.appSecret = appSecret;
     this.fileName = fileName;
     this.authorizationToken = '';
+    this.name = 'googledrive';
+    this.authentication = true;
+    this.scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
   }
 
   initiatedPassportStrategy(callbackUrl) {
@@ -15,7 +18,7 @@ class GoogleDrive {
     this.passportStrategy = new GoogleDriveStrategy({
       clientID: this.apiKey,
       clientSecret: this.appSecret,
-      callbackURL: callbackUrl
+      callbackURL: callbackUrl,
     },
       (accessToken, refreshToken, profile, done) => {
         that.accessToken = accessToken;
@@ -24,7 +27,7 @@ class GoogleDrive {
   }
 
   getName() {
-    return 'googledrive';
+    return this.name;
   }
 
   async getData() {
@@ -32,8 +35,8 @@ class GoogleDrive {
     const response = await request({
       url: 'https://www.googleapis.com/drive/v3/files',
       headers: {
-        Authorization: `Bearer ${this.accessToken}`
-      }
+        Authorization: `Bearer ${this.accessToken}`,
+      },
     });
 
     const jsonbody = JSON.parse(response);
@@ -45,17 +48,17 @@ class GoogleDrive {
       url,
       encoding: null,
       headers: {
-        Authorization: `Bearer ${this.accessToken}`
-      }
+        Authorization: `Bearer ${this.accessToken}`,
+      },
     });
   }
 
   authentication() {
-    return true;
+    return this.authentication;
   }
 
   scope() {
-    return ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
+    return this.scope;
   }
 
   authenticated() {
@@ -72,8 +75,8 @@ async function getData() {
   const response = await request({
     url: 'https://www.googleapis.com/drive/v3/files',
     headers: {
-      Authorization: `Bearer ${this.accessToken}`
-    }
+      Authorization: `Bearer ${this.accessToken}`,
+    },
   });
 
   const jsonbody = JSON.parse(response);
@@ -85,8 +88,8 @@ async function getData() {
     url,
     encoding: null,
     headers: {
-      Authorization: `Bearer ${this.accessToken}`
-    }
+      Authorization: `Bearer ${this.accessToken}`,
+    },
   });
 }
 

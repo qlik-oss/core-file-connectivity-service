@@ -8,6 +8,8 @@ class Dropbox {
     this.appSecret = appSecret;
     this.filePath = filePath;
     this.accessToken = accessToken;
+    this.name = 'dropbox';
+    this.authentication = true;
   }
 
   initiatedPassportStrategy(callbackUrl) {
@@ -17,7 +19,7 @@ class Dropbox {
       apiVersion: '2',
       clientID: this.apiKey,
       clientSecret: this.appSecret,
-      callbackURL: callbackUrl
+      callbackURL: callbackUrl,
     },
       (accessToken, refreshToken, profile, done) => {
         that.accessToken = accessToken;
@@ -26,7 +28,7 @@ class Dropbox {
   }
 
   getName() {
-    return 'dropbox';
+    return this.name;
   }
 
   getData() {
@@ -34,7 +36,7 @@ class Dropbox {
   }
 
   authentication() {
-    return true;
+    return this.authentication;
   }
 
   authenticated() {
@@ -51,8 +53,8 @@ function getData(filePath, accessToken) {
     url: 'https://content.dropboxapi.com/2/files/download',
     headers: {
       'Dropbox-API-Arg': `{"path": "${filePath}"}`,
-      Authorization: `Bearer ${accessToken}`
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 }
 
