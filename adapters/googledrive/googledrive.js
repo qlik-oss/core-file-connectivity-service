@@ -7,6 +7,9 @@ class GoogleDrive {
     this.appSecret = appSecret;
     this.fileName = fileName;
     this.authorizationToken = '';
+    this.name = 'googledrive';
+    this.authentication = true;
+    this.scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
   }
 
   initiatedPassportStrategy(callbackUrl) {
@@ -24,7 +27,7 @@ class GoogleDrive {
   }
 
   getName() {
-    return 'googledrive';
+    return this.name;
   }
 
   async getData() {
@@ -51,11 +54,11 @@ class GoogleDrive {
   }
 
   authentication() {
-    return true;
+    return this.authentication;
   }
 
   scope() {
-    return ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
+    return this.scope;
   }
 
   authenticated() {

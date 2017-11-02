@@ -8,6 +8,8 @@ class Dropbox {
     this.appSecret = appSecret;
     this.filePath = filePath;
     this.accessToken = accessToken;
+    this.name = 'dropbox';
+    this.authentication = true;
   }
 
   initiatedPassportStrategy(callbackUrl) {
@@ -26,7 +28,7 @@ class Dropbox {
   }
 
   getName() {
-    return 'dropbox';
+    return this.name;
   }
 
   getData() {
@@ -34,7 +36,7 @@ class Dropbox {
   }
 
   authentication() {
-    return true;
+    return this.authentication;
   }
 
   authenticated() {

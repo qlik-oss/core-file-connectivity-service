@@ -8,6 +8,9 @@ class OneDrive {
     this.appSecret = appSecret;
     this.filePath = filePath;
     this.authorizationToken = '';
+    this.name = 'onedrive';
+    this.authentication = true;
+    this.scope = ['onedrive.readwrite'];
   }
 
   initiatedPassportStrategy(callbackUrl) {
@@ -25,7 +28,7 @@ class OneDrive {
   }
 
   getName() {
-    return 'onedrive';
+    return this.name;
   }
 
   getData() {
@@ -33,11 +36,11 @@ class OneDrive {
   }
 
   authentication() {
-    return true;
+    return this.authentication;
   }
 
   scope() {
-    return ['onedrive.readwrite'];
+    return this.scope;
   }
 
   authenticated() {

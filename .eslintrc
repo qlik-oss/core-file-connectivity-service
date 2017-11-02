@@ -2,9 +2,11 @@
     "extends": "airbnb-base",
     "rules": {
         "no-console": "off", // Disabled until a logger is in place
-        "max-len": "off"
+        "max-len": "off",
+        "import/no-unresolved": 0 // Otherwise npm install had to be executed in each example
     },
     "env": {
       "node": true
-    }
+    },
+    "root": true
 }

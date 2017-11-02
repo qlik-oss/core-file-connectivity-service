@@ -13,7 +13,7 @@ console.log(`Adapters path ${adapterFolderPath}`);
 fs.readdirSync(adapterFolderPath).forEach((file) => {
   const fullAdapterPath = path.join(adapterFolderPath, file, file);
   console.log(`Using adapter ${fullAdapterPath}`);
-  adapters[file] = require(fullAdapterPath);
+  adapters[file] = require(fullAdapterPath); // eslint-disable-line
 });
 
 const outhaul = Outhaul({ port: 3000, adapters });
