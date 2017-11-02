@@ -2,7 +2,7 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const uuid = require('uuid/v1');
-const passport = require('koa-passport');
+// const passport = require('koa-passport');
 
 function outhaul(options) {
     const app = new Koa();
@@ -15,7 +15,7 @@ function outhaul(options) {
     const router = new Router();
 
     app.use(bodyParser());
-    app.use(passport.initialize());
+    // app.use(passport.initialize());
     app.use(router.routes());
 
     router.get("/health", (ctx) => {
@@ -29,7 +29,7 @@ function outhaul(options) {
 
         const uniqueUrl = `/${uuid()}`;
 
-        console.log(`GET ${uniqueUrl} registerd for ${connection}`);
+        // console.log(`GET ${uniqueUrl} registerd for ${connection}`);
 
         router.get(uniqueUrl, async (ctx) => {
             if(connection.authenticated === undefined || connection.authenticated()){
@@ -92,13 +92,13 @@ function outhaul(options) {
 
     function start() {
         appInstance = app.listen(port);
-        console.log(`Started and listening to port ${port}`);
+        // console.log(`Started and listening to port ${port}`);
         return appInstance;
     }
 
     function close() {
         appInstance.close();
-        console.log('Server Closed()');
+        // console.log('Server Closed()');
     }
 
     return {
