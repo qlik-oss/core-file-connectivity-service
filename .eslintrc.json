@@ -1,0 +1,10 @@
+{
+    "extends": "airbnb-base",
+    "rules": {
+        "no-console": "off", // Disabled until a logger is in place
+        "max-len": "off"
+    },
+    "env": {
+      "node": true
+    }
+}

@@ -15,7 +15,7 @@ class GoogleDrive {
     this.passportStrategy = new GoogleDriveStrategy({
       clientID: this.apiKey,
       clientSecret: this.appSecret,
-      callbackURL: callbackUrl
+      callbackURL: callbackUrl,
     },
       (accessToken, refreshToken, profile, done) => {
         that.accessToken = accessToken;
@@ -32,8 +32,8 @@ class GoogleDrive {
     const response = await request({
       url: 'https://www.googleapis.com/drive/v3/files',
       headers: {
-        Authorization: `Bearer ${this.accessToken}`
-      }
+        Authorization: `Bearer ${this.accessToken}`,
+      },
     });
 
     const jsonbody = JSON.parse(response);
@@ -45,8 +45,8 @@ class GoogleDrive {
       url,
       encoding: null,
       headers: {
-        Authorization: `Bearer ${this.accessToken}`
-      }
+        Authorization: `Bearer ${this.accessToken}`,
+      },
     });
   }
 
@@ -72,8 +72,8 @@ async function getData() {
   const response = await request({
     url: 'https://www.googleapis.com/drive/v3/files',
     headers: {
-      Authorization: `Bearer ${this.accessToken}`
-    }
+      Authorization: `Bearer ${this.accessToken}`,
+    },
   });
 
   const jsonbody = JSON.parse(response);
@@ -85,8 +85,8 @@ async function getData() {
     url,
     encoding: null,
     headers: {
-      Authorization: `Bearer ${this.accessToken}`
-    }
+      Authorization: `Bearer ${this.accessToken}`,
+    },
   });
 }
 

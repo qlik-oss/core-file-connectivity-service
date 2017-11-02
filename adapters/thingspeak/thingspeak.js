@@ -18,8 +18,8 @@ function getData(channelId, apiKey, nrOfDataPoints) {
   return request({
     url,
     headers: {
-      'X-THINGSPEAKAPIKEY': apiKey
-    }
+      'X-THINGSPEAKAPIKEY': apiKey,
+    },
   });
 }
 

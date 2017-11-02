@@ -16,7 +16,7 @@ class OneDrive {
     this.passportStrategy = new OneDriveStrategy({
       clientID: this.apiKey,
       clientSecret: this.appSecret,
-      callbackURL: callbackUrl
+      callbackURL: callbackUrl,
     },
       (accessToken, refreshToken, profile, done) => {
         that.accessToken = accessToken;
@@ -53,8 +53,8 @@ OneDrive.getData = function getData(filePath, accessToken) {
   return request({
     url: `https://api.onedrive.com/v1.0/drive/root:${filePath}:/content`,
     headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 };
 

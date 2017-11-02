@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/outhaul
+    docker:
+      - image: node:8
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command:
+            npm install --quiet
+      - run:
+          name: Run ESLint
+          command:
+            npm run lint
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules

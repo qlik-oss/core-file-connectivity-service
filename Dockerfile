@@ -5,5 +5,4 @@ WORKDIR /app/qlik/outhaul
 COPY package.json ./
 RUN npm install --production --quiet
 COPY . ./
-EXPOSE "3000"
 CMD ["npm", "start", "--silent"]
