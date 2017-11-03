@@ -18,8 +18,8 @@ class MockWithLocalPassport {
 
     const that = this;
 
-    passport.use(new LocalStrategy((username, password, done) => { // eslint-disable-line
-      if (username === that.username && password === that.password) {
+    passport.use(new LocalStrategy((userName, pwd, done) => {
+      if (userName === that.username && pwd === that.password) {
         that.auth = true;
         return done(null, {});
       }
