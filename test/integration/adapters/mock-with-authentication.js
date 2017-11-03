@@ -1,21 +1,20 @@
 class MockWithAuthentication {
-  constructor(params) {
-    this.params = params;
-    this.auth = false;
-  }
+    constructor(params) {
+        this.params = params;
+        this.auth = false;
+    }
 
-  getData() {
-    return this.params;
-  }
+    getData() {
+        return this.params;
+    }
 
-  authenticated() {
-    return this.auth;
-  }
+    authenticated() {
+        return this.auth;
+    }
 
-  authentication(ctx) {
-    this.auth = true;
-    ctx.body = 'authenticated';
-  }
+    authentication() {
+        this.auth = true;
+    }
 }
 
 module.exports = MockWithAuthentication;

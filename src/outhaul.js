@@ -2,7 +2,7 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const uuid = require('uuid/v1');
-// const passport = require('koa-passport');
+const passport = require('koa-passport');
 
 function outhaul(options) {
   const app = new Koa();
@@ -15,7 +15,7 @@ function outhaul(options) {
   const router = new Router();
 
   app.use(bodyParser());
-    // app.use(passport.initialize());
+  app.use(passport.initialize());
   app.use(router.routes());
 
   router.get('/health', (ctx) => {
@@ -27,11 +27,8 @@ function outhaul(options) {
   function addConnection(connection) {
     connections.push(connection);
 
-    const uniqueUrl = `/${uuid()}`;
 
-        // console.log(`GET ${uniqueUrl} registerd for ${connection}`);
-
-    router.get(uniqueUrl, async (ctx) => {
+    const uniqueUrl = `/${uuid()}`; router.get(uniqueUrl, async (ctx) => {
       if (connection.authenticated === undefined || connection.authenticated()) {
         ctx.response.body = await connection.getData();
       } else {
@@ -40,16 +37,17 @@ function outhaul(options) {
     });
 
     if (connection.authentication) {
-      router.get(`${uniqueUrl}/authenticated`, (ctx) => {
-        if (connection.authenticated()) {
-          ctx.body = 'Authenticated';
-        } else {
-          ctx.body = 'Unauthorized';
-        }
-      });
+      router.post(`${uniqueUrl}/authentication`, (ctx, next) => {
+        const callback = connection.authentication();
 
-            // router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategy().name, { scope: connection.scope ? connection.scope() : '' })(ctx, next));
-      router.get(`${uniqueUrl}/authentication`, (ctx, next) => connection.authentication(ctx, next));
+        if (typeof callback === 'function') {
+          return callback(ctx, next);
+        }
+
+        ctx.body = 'authenticated';
+
+        return next();
+      });
 
 
             // const callbackUrl = `/${connection.getName()}/authentication/callback`;
@@ -88,13 +86,11 @@ function outhaul(options) {
 
   function start() {
     appInstance = app.listen(port);
-        // console.log(`Started and listening to port ${port}`);
     return appInstance;
   }
 
   function close() {
     appInstance.close();
-        // console.log('Server Closed()');
   }
 
   return {

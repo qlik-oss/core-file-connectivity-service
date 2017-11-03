@@ -5,8 +5,8 @@
   "author": "QlikTech International AB",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
     "start": "node ./src/index.js",
     "test:integration": "aw-test-runner ./test/integration --exit"
   },
@@ -16,6 +16,7 @@
     "eslint-config-airbnb-base": "11.1.3",
     "eslint-plugin-import": "2.2.0",
     "halyard.js": "1.0.1",
+    "passport-local": "^1.0.0",
     "supertest": "3.0.0"
   },
   "dependencies": {
