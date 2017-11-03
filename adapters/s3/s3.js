@@ -15,13 +15,7 @@ class S3 {
 }
 
 function getData(accessKeyId, secretAccessKey, bucket, file, region) {
-  AWS.config.update(
-    {
-      accessKeyId,
-      secretAccessKey,
-      region: region || 'eu-west-2',
-    },
-  );
+  AWS.config.update({ accessKeyId, secretAccessKey, region: region || 'eu-west-2' });
 
   const s3 = new AWS.S3();
 
