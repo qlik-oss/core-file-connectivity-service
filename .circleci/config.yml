@@ -23,4 +23,4 @@ jobs:
       - run:
           name: Run Component Tests
           command:
-            npm install --quiet
+            npm run test:component
