@@ -20,3 +20,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run:
+          name: Run Component Tests
+          command:
+            npm install --quiet
