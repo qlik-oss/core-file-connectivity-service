@@ -36,7 +36,7 @@ jobs:
       - run:
           name: Start container and check health
           command: |
-            CONTAINER_ID=$(docker run qlikea/outhaul -d -p 3000:3000)
+            CONTAINER_ID=$(docker run -d -p 3000:3000 qlikea/outhaul)
 
             set +e
             # Check that Outhaul reaches status healthy within 60 seconds
