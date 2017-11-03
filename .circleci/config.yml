@@ -43,10 +43,10 @@ jobs:
             # Check that Outhaul reaches status healthy within 60 seconds
             RETRIES=0
 
-            while [ "$STATUS" != "healthy" && $RETRIES != 6 ]; do
+            while [[ "$STATUS" != "healthy" && RETRIES != 30 ]]; do
               STATUS=$(docker inspect -f '{{.State.Health.Status}}' "$CONTAINER_ID")
               echo "Outhaul status is $STATUS"
-              sleep 10
+              sleep 2
               RETRIES=$((RETRIES + 1 ))
             done
 
@@ -54,4 +54,3 @@ jobs:
               echo "Outhaul service did not reach status healthy"
               exit 1
             fi
-
