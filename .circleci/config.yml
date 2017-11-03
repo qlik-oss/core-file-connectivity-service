@@ -42,6 +42,7 @@ jobs:
             set +e
             # Check that Outhaul reaches status healthy within 60 seconds
             RETRIES=0
+            STATUS="unhealthy"
 
             while (( STATUS != "healthy" && RETRIES != 6 )); do
               STATUS=$(docker inspect -f '{{.State.Health.Status}}' "$CONTAINER_ID")
