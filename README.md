@@ -4,7 +4,7 @@
 
 ## Overview
 
-Outhaul is a reverse proxy for registering a custom connector service and retrieve a secure http endpoint.
+Outhaul is a reverse proxy for registering a custom connector service and retrieving a secure http endpoint.
 
 ## Contributing
 
@@ -38,6 +38,6 @@ Component tests can be run with:
 npm run test:component
 ```
 
-### Circle CI
+### CircleCI
 
-Linting, building and testing is part of a job pipeline in Circle CI, and is also a prerequisite for merging a PR to master.
+Linting, building and testing is part of a job pipeline in CircleCI, and is also a prerequisite for merging a PR to master.
