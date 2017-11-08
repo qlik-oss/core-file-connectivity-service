@@ -37,14 +37,24 @@ function outhaul(options) {
     });
 
     if (connection.authentication) {
-      router.post(`${uniqueUrl}/authentication`, (ctx, next) => {
-        const callback = connection.authentication();
 
-        if (typeof callback === 'function') {
-          return callback(ctx, next);
-        }
+      const callbackUrl = `${uniqueUrl}/authentication_callback`;
 
-        ctx.body = 'authenticated';
+
+      router.get('/googledrive/authentication/callback', async (ctx, next) => {
+
+        console.log(ctx.request);
+
+        await connection.authenticationCallback(ctx);
+
+        return;
+      });
+
+      router.get(`${uniqueUrl}/authentication`, (ctx, next) => {
+        const callback = connection.authentication(ctx, 'http://localhost:3000/googledrive/authentication/callback'); //Neeed to fetch host and port!!!!!!!
+
+        //console.log(`${uniqueUrl}/authentication`);
+        //ctx.body = 'authenticated';
 
         return next();
       });

@@ -1,4 +1,4 @@
-FROM node:7-alpine
+FROM node:8-alpine
 
 RUN apk update && apk add bash && apk add findutils && rm -rf /var/cache/apk/*
 RUN mkdir -p /app/qlik/outhaul
