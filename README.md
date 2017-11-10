@@ -11,10 +11,10 @@ The main purpose of the connection strategy is to access a data source. The data
 This is the workflow 
 <img src="./docs/images/flow.png" width="500">
 
-Another usage for the connection strategies is to preprocess the data by transforming and cleancing it, this can remove that need from the load script.
+Another usage for the connection strategy is to preprocess the data by transforming and cleancing it, this can reduce complexity of the load script.
 
 ### Authentication
-The connection strategy is responsible for handling authentication. Outhaul will define the required authentication HTTP endpoint needed by its connection strategies, like OAuth2. 
+The connection strategy is responsible for handling authentication. Outhaul will define the required authentication HTTP endpoint needed by its connection strategies, like OAuth2. It is worth noticing that data sources that enforces OAuth2 authentication need lots of user involvment with signin and can be hard to automate. To programatically access a data source it is recommended to use API keys instead of OAuth2 if that is possible.
 
 ## Contributing
 
