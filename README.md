@@ -3,15 +3,16 @@
 [![CircleCI](https://circleci.com/gh/qlik-ea/outhaul.svg?style=shield&circle-token=55d7bdfc4f3827e260a2e3480dbd64eab52417c0)](https://circleci.com/gh/qlik-ea/outhaul)
 
 ## Overview
+Outhaul is a service built to simplify accessing data sources. Connection strategies are registered in Outhaul and in return a unique HTTP endpoint is defined. The unique HTTP endpoint is used to access the data source. This solution enables the QIX Engine to access a wide range of different data sources only using the built in webfile connectivity. Another advantage is that the connectivity strategies can be hosted on a different host than QIX Engine.
 
-Outhaul is a service built to simplify accessing protected data sources. A connection strategy is registered in Outhaul and an unique HTTP endpoint is defined. 
-The unique HTTP endpoint received is used to access the data source. Outhaul is well suited to handle the standard authentication workflows that requires user involvement like OAuth2. 
-
+### Connection strategies
 The main purpose of the connection strategy is to access a data source. The data from the source can be of any kind but the connection strategy needs to transform it to a tabular format suited for QIX Engine. If the source data is in a tabular format then the connection strategy should return it as is.
 
-A data source could be protected with authentication like OAuth2. Outhaul will define the required HTTP endpoint by its connection strategies to authentication their data source. 
-
+This is the workflow 
 <img src="./docs/images/flow.png" width="500">
+
+### Authentication
+The connection strategy is responsible for handling authentication. Outhaul will define the required authentication HTTP endpoint needed by its connection strategies, like OAuth2. 
 
 ## Contributing
 
