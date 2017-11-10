@@ -4,7 +4,14 @@
 
 ## Overview
 
-Outhaul is a reverse proxy for registering a custom connector service and retrieving a secure http endpoint.
+Outhaul is a service built to simplify accessing protected data sources. A connection strategy is registered in Outhaul and an unique HTTP endpoint is defined. 
+The unique HTTP endpoint received is used to access the data source. Outhaul is well suited to handle the standard authentication workflows that requires user involvement like OAuth2. 
+
+The main purpose of the connection strategy is to access the data source. The data on the data source can be of any kind. The connection strategy needs to transform the data if is not in a tabular format suited for QIX Engine.
+A data source could be protected with authentication like OAuth2. Outhaul will define the required HTTP endpoint by its connection strategies to authentication their data source. 
+
+![alt text](./docs/images/flow.png "Outhaul flow diagram")
+
 
 ## Contributing
 
