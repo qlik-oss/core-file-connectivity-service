@@ -1,5 +1,7 @@
 const GoogleDriveStrategy = require('passport-google-oauth20').Strategy;
 const request = require('request-promise');
+const generateUuid = require('uuid/v1');
+
 
 class GoogleDrive {
   constructor(apiKey, appSecret, fileName) {
@@ -10,24 +12,34 @@ class GoogleDrive {
     this.name = 'googledrive';
     this.authentication = true;
     this.scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
+
+    this.id = generateUuid();
+
   }
 
   initiatedPassportStrategy(callbackUrl) {
-    const that = this;
-
     this.passportStrategy = new GoogleDriveStrategy({
       clientID: this.apiKey,
       clientSecret: this.appSecret,
       callbackURL: callbackUrl,
     },
       (accessToken, refreshToken, profile, done) => {
-        that.accessToken = accessToken;
-        return done(undefined, profile);
+        return done(undefined, accessToken);
       });
+  }
+
+
+  uuid(){
+    return this.id;
   }
 
   getName() {
     return this.name;
+  }
+
+  authenticationCallback(accessToken) {
+    console.log("Got accessToken!!!!");
+    this.accessToken = accessToken;
   }
 
   async getData() {
