@@ -1,17 +1,18 @@
 const request = require('request-promise');
 const google = require('googleapis');
+const generateUuid = require('uuid/v1');
 
 let OAuth2 = google.auth.OAuth2;
 let auth;
 
 class CustomGoogleDrive {
-  constructor(clientId, secret, redirectUrl, fileName ) {
+  constructor(clientId, secret, fileName ) {
     this.clientId = clientId;
     this.secret = secret;
-    this.redirectUrl = redirectUrl;
     this.fileName = fileName;
-
     this.accessToken;
+
+    this.id = generateUuid();
   }
 
   async getData() {
@@ -24,7 +25,6 @@ class CustomGoogleDrive {
 
     const jsonbody = JSON.parse(response);
     const file = jsonbody.files.find(f => f.name === this.fileName);
-
     const url = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`;
 
     return request({
@@ -36,25 +36,34 @@ class CustomGoogleDrive {
     });
   }
 
+  uuid(){
+    return this.id;
+  }
+
   authenticated() {
     return this.accessToken;
   }
 
-  async authenticationCallback(ctx) {
-    let code = ctx.request.querystring.replace('code=', '');
+  authenticationCallbackUrl(){
+    return this.redirectUrl;
+  }
 
+
+  async authenticationCallback(authorizationCode) {
     let that = this;
 
-    await auth.getToken(code, function (err, tokens) {
+    return await auth.getToken(authorizationCode, async function (err, tokens) {
       if (!err) {
         that.accessToken = tokens.access_token;
-        ctx.response.body = "ok";
-        return ctx;
+        return true;
+      }
+      else{
+        return false;
       }
     });
   }
 
-  authentication(ctx, redirectUrl) {
+  authentication(ctx) {
     var scopes = [
       'profile',
       'https://www.googleapis.com/auth/drive',
@@ -64,12 +73,13 @@ class CustomGoogleDrive {
     auth = new OAuth2(
       this.clientId,
       this.secret,
-      redirectUrl
+      this.redirectUrl
     );
 
     var url = auth.generateAuthUrl({
       access_type: 'online',
       scope: scopes,
+      state: this.uuid()
     });
 
     return ctx.redirect(url);

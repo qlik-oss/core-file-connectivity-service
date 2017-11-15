@@ -4,7 +4,7 @@ const request = require('supertest');
 const CustomGoogleDrive = require('../../adapters/custom-googledrive/custom-googledrive.js');
 
 async function run(){
-  const adapters = {
+  const strategies = {
     customGoogleDrive: CustomGoogleDrive,
   };
 
@@ -12,7 +12,7 @@ async function run(){
 
   outhaul = Outhaul({
     port: 3000,
-    adapters,
+    strategies,
   });
 
   outhaul.start();
@@ -23,19 +23,17 @@ async function run(){
     .send({
       adapter: 'customGoogleDrive',
       params: [
-        '811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com',
-        'yi4C3WagMm4J2Ig2Vr4xYbSZ',
-        'http://localhost:3000/googledrive/authentication/callback',
-        'airports.csv'],
+        '811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', //OAuth2 clientID
+        'yi4C3WagMm4J2Ig2Vr4xYbSZ', //OAuth2 secret
+        'airports.csv'], //File on google drive to download
     })
     .expect(200);
 
   await request(url).get(res.text).expect(401);
 
-  console.log(url+res.text+'/authentication');
+  console.log('Authentication is needed go to: ' + url + res.text + '/authentication');
 
   setTimeout(async function(){
-
     const finalRes = await request(url).get(res.text);
 
     console.log(finalRes.body.toString());
