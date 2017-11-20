@@ -24,26 +24,25 @@ async function run(){
 
   const url = 'http://localhost:3000';
 
-  const res = await request(url).post('/connections/add')
+  const res2 = await request(url).post('/connections/add')
     .send({
-      connector: 'GoogleDrive',
-      params: ['airports.csv'],
+      connector: 'OneDrive',
+      params: ['/airports.csv'],
     })
     .expect(200);
 
-  await request(url).get(res.text).expect(401);
+  await request(url).get(res2.text).expect(401);
 
-  console.log('Authentication is needed for google drive goto: ' + url + res.text + '/authentication');
-
+  console.log('Authentication is needed for onedrive goto: ' + url + res2.text + '/authentication');
 
   let interval = setInterval(async function(){
-    const authRes = await request(url).get(res.text);
+    const authResOnedrive = await request(url).get(res2.text);
 
-    if( authRes.statusCode === 200){
+    if( authResOnedrive.statusCode === 200){
       clearInterval(interval);
 
-      const finalRes = await request(url).get(res.text);
-      console.log(finalRes.body.toString());
+      const onedriveResult = await request(url).get(res2.text);
+      console.log(onedriveResult.body.toString());
 
       return;
     }

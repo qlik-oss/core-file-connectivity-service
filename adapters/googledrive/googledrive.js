@@ -1,5 +1,6 @@
 const GoogleDrivePassportStrategy = require('passport-google-oauth20').Strategy;
 const request = require('request-promise');
+
 const OAuth2Strategy = require('../../src/oauth2-strategy');
 const ConnectionBase = require('../../src/connection-base');
 

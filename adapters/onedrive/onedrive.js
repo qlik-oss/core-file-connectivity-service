@@ -1,64 +1,36 @@
-const OneDriveStrategy = require('passport-onedrive').Strategy;
-const request = require('request');
+const OneDrivePassportStrategy = require('passport-onedrive').Strategy;
+const request = require('request-promise');
 
+const OAuth2Strategy = require('../../src/oauth2-strategy');
+const ConnectionBase = require('../../src/connection-base');
 
-class OneDrive {
-  constructor(apiKey, appSecret, filePath) {
-    this.apiKey = apiKey;
-    this.appSecret = appSecret;
-    this.filePath = filePath;
-    this.authorizationToken = '';
-    this.name = 'onedrive';
-    this.authentication = true;
-    this.scope = ['onedrive.readwrite'];
+class OneDrive extends ConnectionBase {
+  constructor(strategy, fileName) {
+    super(strategy, OneDrivePassportStrategy);
+    this.fileName = fileName;
   }
 
-  initiatedPassportStrategy(callbackUrl) {
-    const that = this;
-
-    this.passportStrategy = new OneDriveStrategy({
-      clientID: this.apiKey,
-      clientSecret: this.appSecret,
-      callbackURL: callbackUrl,
-    },
-      (accessToken, refreshToken, profile, done) => {
-        that.accessToken = accessToken;
-        return done(undefined, profile);
-      });
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getData() {
-    return OneDrive.getData(this.filePath, this.accessToken);
-  }
-
-  authentication() {
-    return this.authentication;
-  }
-
-  scope() {
-    return this.scope;
-  }
-
-  authenticated() {
-    return this.accessToken;
-  }
-
-  getPassportStrategy() {
-    return this.passportStrategy;
+  async getData() {
+    console.log("accesstoken", this.accessToken);
+    return request({
+      url: `https://api.onedrive.com/v1.0/drive/root:${this.fileName}:/content`,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
   }
 }
 
-OneDrive.getData = function getData(filePath, accessToken) {
-  return request({
-    url: `https://api.onedrive.com/v1.0/drive/root:${filePath}:/content`,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-};
+class OneDriveStrategy extends OAuth2Strategy {
+  constructor(clientId, clientSecret){
+    const scope = ['onedrive.readwrite'];
+    super("OneDrive", OneDrivePassportStrategy, clientId, clientSecret, scope);
+    this.connector = OneDrive;
+  }
 
-module.exports = OneDrive;
+  newConnector(params){
+    return new OneDrive(this, ...params);
+  }
+}
+
+module.exports = OneDriveStrategy;
