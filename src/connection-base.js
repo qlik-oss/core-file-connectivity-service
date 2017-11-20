@@ -11,8 +11,9 @@ class ConnectionBase {
     return this.id;
   }
 
-  authenticationCallback(accessToken) {
+  authenticationCallback(accessToken, refreshToken) {
     this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
   }
 
   authentication() {

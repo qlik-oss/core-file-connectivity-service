@@ -59,8 +59,8 @@ function outhaul(options) {
 
     if(connection){
       console.log("connection");
-      const res = await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken) => {
-        connection.authenticationCallback(accessToken);
+      const res = await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken, refreshToken) => {
+        connection.authenticationCallback(accessToken, refreshToken);
       })(ctx, next);
     }
     else{
