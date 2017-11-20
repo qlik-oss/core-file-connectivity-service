@@ -34,7 +34,7 @@
 //   it("should have access to data if a connection doesn't require authentication", async () => {
 //     const res = await request(url).post('/connections/add')
 //       .send({
-//         adapter: 'mock',
+//         connector: 'mock',
 //         params: [returnData],
 //       })
 //       .expect(200);
@@ -46,7 +46,7 @@
 //   it('should have access to data if a connection is authenticated', async () => {
 //     const res = await request(url).post('/connections/add')
 //       .send({
-//         adapter: 'mock_with_authentication',
+//         connector: 'mock_with_authentication',
 //         params: [returnData],
 //       })
 //       .expect(200);
@@ -62,7 +62,7 @@
 //   it.skip('should be authenticatate with local passport strategy', async () => {
 //     const res = await request(url).post('/connections/add')
 //       .send({
-//         adapter: 'mock_with_local_passport',
+//         connector: 'mock_with_local_passport',
 //         params: [returnData, 'admin', 'password'],
 //       })
 //       .expect(200);

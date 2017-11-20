@@ -1,30 +1,34 @@
 const uuid = require('uuid/v1');
 
 class OAuth2Strategy {
-  constructor(passportStrategy, accessToken) {
-    this.id = uuid();
-    this.passportStrategy = passportStrategy;
-    this.accessToken = undefined;
+  constructor(name, strategy, clientId, clientSecret, scope) {
+    this.name = name;
+    this.strategy = strategy;
+    this.clientId = clientId;
+    this.clientSecret = clientSecret;
+    this.scope = scope;
   }
 
-  uuid() {
-    return this.id;
-  }
+  setupPassportStrategy(callbackUrl){
+    this.passportStrategy = new this.strategy({
+        clientID: this.clientId,
+        clientSecret: this.clientSecret,
+        scope: this.scope,
+        callbackURL: callbackUrl,
+      },
+      (accessToken, refreshToken, profile, done) => {
+        return done(undefined, accessToken, refreshToken);
+      });
 
-  authenticationCallback(accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  authentication() {
-    return true;
-  }
-
-  authenticated() {
-    return this.accessToken;
-  }
-
-  getPassportStrategy() {
     return this.passportStrategy;
+  }
+
+  getPassportStrategyName(){
+    return this.passportStrategy.name;
+  }
+
+  getName(){
+    return this.name;
   }
 }
 

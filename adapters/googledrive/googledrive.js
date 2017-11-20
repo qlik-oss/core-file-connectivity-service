@@ -1,11 +1,11 @@
-const GoogleDriveStrategy = require('passport-google-oauth20').Strategy;
+const GoogleDrivePassportStrategy = require('passport-google-oauth20').Strategy;
 const request = require('request-promise');
-
 const OAuth2Strategy = require('../../src/oauth2-strategy');
+const ConnectionBase = require('../../src/connection-base');
 
-class GoogleDrive extends OAuth2Strategy {
-  constructor(fileName) {
-    super(GoogleDriveStrategy);
+class GoogleDrive extends ConnectionBase {
+  constructor(strategy, fileName) {
+    super(strategy, GoogleDrivePassportStrategy);
     this.fileName = fileName;
   }
 
@@ -31,20 +31,18 @@ class GoogleDrive extends OAuth2Strategy {
       },
     });
   }
+}
 
-  getPassportStrategyName(){
-    return GoogleDrive.passportStrategyName;
+class GoogleDriveStrategy extends OAuth2Strategy {
+  constructor(clientId, clientSecret){
+    const scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
+    super("GoogleDrive", GoogleDrivePassportStrategy, clientId, clientSecret, scope);
+    this.connector = GoogleDrive;
+  }
+
+  newConnector(params){
+    return new GoogleDrive(this, ...params);
   }
 }
 
-GoogleDrive.configure = function(clientId, clientSecret){
-  GoogleDrive.clientId = clientId;
-  GoogleDrive.clientSecret = clientSecret;
-  GoogleDrive.scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
-}
-
-GoogleDrive.name = "GoogleDrive";
-
-GoogleDrive.PassportStrategy = GoogleDriveStrategy;
-
-module.exports =  GoogleDrive;
+module.exports = GoogleDriveStrategy;

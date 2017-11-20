@@ -4,6 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 const session = require('koa-session');
 const qs = require('query-string');
+const Oauth2Strategy = require('./oauth2-strategy');
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -24,27 +25,14 @@ function outhaul(options) {
   const authenticationCallback = '/oauth2/callback';
 
   options.strategies.forEach((strategy) => {
-
-    if(strategy.PassportStrategy){
-
-      let passportStrategy = new strategy.PassportStrategy({
-          clientID: strategy.clientId,
-          clientSecret: strategy.clientSecret,
-          scope: strategy.scope,
-          callbackURL: "http://localhost:3000" + authenticationCallback //Refactor!!!,
-        },
-        (accessToken, refreshToken, profile, done) => {
-          return done(undefined, accessToken, refreshToken);
-        });
-
-      strategy.passportStrategyName = passportStrategy.name;
-
-      console.log("Passport strategy ", strategy.passportStrategyName);
+    if(strategy.setupPassportStrategy){
+      const callbackUrl = "http://localhost:3000" + authenticationCallback //Refactor!!!,
+      const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
 
       passport.use(passportStrategy);
     }
 
-    strategies[strategy.name] = strategy;
+    strategies[strategy.getName()] = strategy;
   });
 
   const connections = [];
@@ -63,7 +51,6 @@ function outhaul(options) {
   });
 
   router.get(authenticationCallback, async (ctx, next) => {
-
     console.log("callbacked");
 
     const parsedQs = qs.parse(ctx.request.querystring);
@@ -86,8 +73,6 @@ function outhaul(options) {
   function addConnection(connection) {
     connections.push(connection);
 
-    connection.redirectUrl = "http://localhost:3000" + authenticationCallback; //Refactor!!!
-
     const uniqueUrl = `/${connection.uuid()}`; router.get(uniqueUrl, async (ctx) => {
       if (connection.authenticated === undefined || connection.authenticated()) {
         ctx.response.body = await connection.getData();
@@ -97,11 +82,6 @@ function outhaul(options) {
     });
 
     if (connection.authentication) {
-      //connection.initiatedPassportStrategy(connection.redirectUrl); //Should be done at start up
-
-
-      console.log("addconnection strategy ", connection.getPassportStrategyName());
-
       router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
     }
 
@@ -111,15 +91,21 @@ function outhaul(options) {
   router.post('/connections/add', async (ctx) => {
     const input = ctx.request.body;
 
-    if (input.adapter) {
-      if (strategies[input.adapter]) {
-        const connection = new strategies[input.adapter](...input.params);
+    if (input.connector) {
+      if (strategies[input.connector]) {
+
+        console.log("connector match ", strategies[input.connector]);
+
+        const connection = strategies[input.connector].newConnector(input.params);
+
+        console.log("connection ", connection);
+
         ctx.response.body = addConnection(connection);
       } else {
-        ctx.response.body = "Couldn't find adapter";
+        ctx.response.body = "Couldn't find connector";
       }
     } else {
-      ctx.response.body = 'Adapter not specified';
+      ctx.response.body = 'Connector not specified';
     }
   });
 
