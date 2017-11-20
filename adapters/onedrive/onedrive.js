@@ -11,7 +11,7 @@ class OneDrive extends ConnectionBase {
   }
 
   async getData() {
-    console.log("accesstoken", this.accessToken);
+    console.log('accesstoken', this.accessToken);
     return request({
       url: `https://api.onedrive.com/v1.0/drive/root:${this.fileName}:/content`,
       headers: {
@@ -22,13 +22,13 @@ class OneDrive extends ConnectionBase {
 }
 
 class OneDriveStrategy extends OAuth2Strategy {
-  constructor(clientId, clientSecret){
+  constructor(clientId, clientSecret) {
     const scope = ['onedrive.readwrite'];
-    super("OneDrive", OneDrivePassportStrategy, clientId, clientSecret, scope);
+    super('OneDrive', OneDrivePassportStrategy, clientId, clientSecret, scope);
     this.connector = OneDrive;
   }
 
-  newConnector(params){
+  newConnector(params) {
     return new OneDrive(this, ...params);
   }
 }

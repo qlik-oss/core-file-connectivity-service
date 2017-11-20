@@ -35,13 +35,13 @@ class GoogleDrive extends ConnectionBase {
 }
 
 class GoogleDriveStrategy extends OAuth2Strategy {
-  constructor(clientId, clientSecret){
+  constructor(clientId, clientSecret) {
     const scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
-    super("GoogleDrive", GoogleDrivePassportStrategy, clientId, clientSecret, scope);
+    super('GoogleDrive', GoogleDrivePassportStrategy, clientId, clientSecret, scope);
     this.connector = GoogleDrive;
   }
 
-  newConnector(params){
+  newConnector(params) {
     return new GoogleDrive(this, ...params);
   }
 }

@@ -4,18 +4,16 @@ const request = require('supertest');
 const GoogleDriveStrategy = require('../../adapters/googledrive/googledrive.js');
 const OneDriveStrategy = require('../../adapters/onedrive/onedrive.js');
 
-async function run(){
+async function run() {
   const GoogleDrive = new GoogleDriveStrategy('811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', 'yi4C3WagMm4J2Ig2Vr4xYbSZ');
   const OneDrive = new OneDriveStrategy('59dac417-3a16-4829-beb6-024d7a649047', 'jiTGLVZ2*&lboywOB9615!]');
 
   const strategies = [
     GoogleDrive,
-    OneDrive
+    OneDrive,
   ];
 
-  let outhaul;
-
-  outhaul = Outhaul({
+  const outhaul = Outhaul({
     port: 3000,
     strategies,
   });
@@ -33,19 +31,17 @@ async function run(){
 
   await request(url).get(res.text).expect(401);
 
-  console.log('Authentication is needed for google drive goto: ' + url + res.text + '/authentication');
+  console.log(`Authentication is needed for google drive goto: ${url}${res.text}/authentication`);
 
 
-  let interval = setInterval(async function(){
+  const interval = setInterval(async () => {
     const authRes = await request(url).get(res.text);
 
-    if( authRes.statusCode === 200){
+    if (authRes.statusCode === 200) {
       clearInterval(interval);
 
       const finalRes = await request(url).get(res.text);
       console.log(finalRes.body.toString());
-
-      return;
     }
   }, 1000);
 }

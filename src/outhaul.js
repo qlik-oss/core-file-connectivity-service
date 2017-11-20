@@ -4,7 +4,6 @@ const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 const session = require('koa-session');
 const qs = require('query-string');
-const Oauth2Strategy = require('./oauth2-strategy');
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -20,13 +19,13 @@ function outhaul(options) {
 
   const port = options.port;
 
-  let strategies = [];
+  const strategies = [];
 
   const authenticationCallback = '/oauth2/callback';
 
   options.strategies.forEach((strategy) => {
-    if(strategy.setupPassportStrategy){
-      const callbackUrl = "http://localhost:3000" + authenticationCallback //Refactor!!!,
+    if (strategy.setupPassportStrategy) {
+      const callbackUrl = `http://localhost:3000${authenticationCallback}`; // Refactor!!!,
       const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
 
       passport.use(passportStrategy);
@@ -51,23 +50,20 @@ function outhaul(options) {
   });
 
   router.get(authenticationCallback, async (ctx, next) => {
-    console.log("callbacked");
+    console.log('callbacked');
 
     const parsedQs = qs.parse(ctx.request.querystring);
 
-    let connection = connections.find((c) => c.uuid() === parsedQs.state);
+    const connection = connections.find(c => c.uuid() === parsedQs.state);
 
-    if(connection){
-      console.log("connection");
-      const res = await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken, refreshToken) => {
+    if (connection) {
+      console.log('connection');
+      await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken, refreshToken) => {
         connection.authenticationCallback(accessToken, refreshToken);
       })(ctx, next);
+    } else {
+      ctx.throw(400, 'Cannot find matching connection with uuid mathing callback state');
     }
-    else{
-      ctx.throw(400, "Cannot find matching connection with uuid mathing callback state");
-    }
-
-    return;
   });
 
   function addConnection(connection) {
@@ -93,12 +89,11 @@ function outhaul(options) {
 
     if (input.connector) {
       if (strategies[input.connector]) {
-
-        console.log("connector match ", strategies[input.connector]);
+        console.log('connector match ', strategies[input.connector]);
 
         const connection = strategies[input.connector].newConnector(input.params);
 
-        console.log("connection ", connection);
+        console.log('connection ', connection);
 
         ctx.response.body = addConnection(connection);
       } else {

@@ -4,7 +4,7 @@ class ConnectionBase {
   constructor(strategy, accessToken) {
     this.id = uuid();
     this.strategy = strategy;
-    this.accessToken = undefined;
+    this.accessToken = accessToken;
   }
 
   uuid() {
@@ -16,7 +16,7 @@ class ConnectionBase {
     this.refreshToken = refreshToken;
   }
 
-  authentication() {
+  authentication() {  // eslint-disable-line class-methods-use-this
     return true;
   }
 
@@ -28,7 +28,7 @@ class ConnectionBase {
     return this.strategy;
   }
 
-  getPassportStrategyName(){
+  getPassportStrategyName() {
     return this.strategy.getPassportStrategyName();
   }
 }
