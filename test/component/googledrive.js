@@ -4,10 +4,12 @@ const request = require('supertest');
 const GoogleDrive = require('../../adapters/googledrive/googledrive.js');
 
 async function run(){
-  const strategies = {
-    GoogleDrive: GoogleDrive,
-  };
+  GoogleDrive.configure('811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', 'yi4C3WagMm4J2Ig2Vr4xYbSZ');
 
+  const strategies = [
+    GoogleDrive
+
+]
   let outhaul;
 
   outhaul = Outhaul({
@@ -22,10 +24,7 @@ async function run(){
   const res = await request(url).post('/connections/add')
     .send({
       adapter: 'GoogleDrive',
-      params: [
-        '811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', //OAuth2 clientID
-        'yi4C3WagMm4J2Ig2Vr4xYbSZ', //OAuth2 secret
-        'airports.csv'], //File on google drive to download
+      params: ['airports.csv'],
     })
     .expect(200);
 

@@ -3,9 +3,7 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 const session = require('koa-session');
-
 const qs = require('query-string');
-
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -17,14 +15,39 @@ passport.deserializeUser((user, done) => {
 
 function outhaul(options) {
   const app = new Koa();
-
   app.keys = ['hemligt'];
 
   const port = options.port;
-  const strategies = options.strategies;
+
+  let strategies = [];
+
+  const authenticationCallback = '/oauth2/callback';
+
+  options.strategies.forEach((strategy) => {
+
+    if(strategy.PassportStrategy){
+
+      let passportStrategy = new strategy.PassportStrategy({
+          clientID: strategy.clientId,
+          clientSecret: strategy.clientSecret,
+          scope: strategy.scope,
+          callbackURL: "http://localhost:3000" + authenticationCallback //Refactor!!!,
+        },
+        (accessToken, refreshToken, profile, done) => {
+          return done(undefined, accessToken, refreshToken);
+        });
+
+      strategy.passportStrategyName = passportStrategy.name;
+
+      console.log("Passport strategy ", strategy.passportStrategyName);
+
+      passport.use(passportStrategy);
+    }
+
+    strategies[strategy.name] = strategy;
+  });
 
   const connections = [];
-
   const router = new Router();
 
   let appInstance;
@@ -39,24 +62,19 @@ function outhaul(options) {
     ctx.response.body = 'ok';
   });
 
-  //Note make this more generic ;)
-  const authenticationCallback = '/oauth2/callback';
-
   router.get(authenticationCallback, async (ctx, next) => {
+
+    console.log("callbacked");
+
     const parsedQs = qs.parse(ctx.request.querystring);
 
     let connection = connections.find((c) => c.uuid() === parsedQs.state);
 
-
-    console.log(JSON.stringify(parsedQs));
     if(connection){
-
-      const res = await passport.authenticate('google', { failureRedirect: '/login' }, (err, accessToken) => {
+      console.log("connection");
+      const res = await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken) => {
         connection.authenticationCallback(accessToken);
       })(ctx, next);
-
-      console.log("res ", res);
-
     }
     else{
       ctx.throw(400, "Cannot find matching connection with uuid mathing callback state");
@@ -79,21 +97,13 @@ function outhaul(options) {
     });
 
     if (connection.authentication) {
-      //console.log(connection.authenticationCallbackUrl())
+      //connection.initiatedPassportStrategy(connection.redirectUrl); //Should be done at start up
 
 
-      connection.initiatedPassportStrategy(connection.redirectUrl);
+      console.log("addconnection strategy ", connection.getPassportStrategyName());
 
-      router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategy().name, { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
-
-
-      // router.get(`${uniqueUrl}/authentication`, (ctx, next) => {
-      //   const callback = connection.authentication(ctx, authenticationCallback);
-      //   return next();
-      // });
+      router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
     }
-
-    passport.use(connection.getPassportStrategy());
 
     return uniqueUrl;
   }
