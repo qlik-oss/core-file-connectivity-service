@@ -1,8 +1,8 @@
 const Outhaul = require('../src/outhaul.js');
 const request = require('supertest');
 
-const GoogleDriveStrategy = require('./googledrive/googledrive.js');
-const OneDriveStrategy = require('./onedrive/onedrive.js');
+const GoogleDriveStrategy = require('../strategies/googledrive/googledrive.js');
+const OneDriveStrategy = require('../strategies/onedrive/onedrive.js');
 
 async function run() {
   const GoogleDrive = new GoogleDriveStrategy('811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', 'yi4C3WagMm4J2Ig2Vr4xYbSZ');
