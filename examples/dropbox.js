@@ -2,6 +2,7 @@ const Outhaul = require('../src/outhaul.js');
 const request = require('supertest');
 
 const DropboxStrategy = require('../strategies/dropbox/dropbox.js');
+const logger = require('./logger').get();
 
 async function run() {
   const Dropbox = new DropboxStrategy('xhf34uwq738crh5', '74vk4ym12bq205k');
@@ -26,18 +27,17 @@ async function run() {
     })
     .expect(200);
 
-  console.log('add connection done');
+  logger.info('add connection done');
 
   await request(url).get(res.text).expect(401);
 
-  console.log(`Authentication is needed for onedrive goto: ${url}${res.text}/authentication`);
+  logger.info(`Authentication is needed for onedrive goto: ${url}${res.text}/authentication`);
 
   const interval = setInterval(async () => {
     const authRes = await request(url).get(res.text);
-    console.log(authRes.body);
     if (authRes.statusCode === 200) {
       clearInterval(interval);
-      console.log(authRes.body.toString());
+      logger.info(authRes.body.toString());
     }
   }, 1000);
 }
