@@ -2,7 +2,7 @@ const Outhaul = require('../src/outhaul.js');
 const request = require('supertest');
 
 const DropboxStrategy = require('../strategies/dropbox/dropbox.js');
-const logger = require('./logger').get();
+const logger = require('../src/logger').get();
 
 async function run() {
   const Dropbox = new DropboxStrategy('xhf34uwq738crh5', '74vk4ym12bq205k');
