@@ -7,13 +7,15 @@ class OAuth2Strategy {
     this.scope = scope;
   }
 
-  setupPassportStrategy(callbackUrl) {
-    this.passportStrategy = new this.Strategy({
+  setupPassportStrategy(callbackUrl, options) {
+    const additionalOptions = options || {};
+
+    this.passportStrategy = new this.Strategy(Object.assign({
       clientID: this.clientId,
       clientSecret: this.clientSecret,
       scope: this.scope,
       callbackURL: callbackUrl,
-    },
+    }, additionalOptions),
       (accessToken, refreshToken, profile, done) => done(undefined, accessToken, refreshToken));
 
     return this.passportStrategy;
