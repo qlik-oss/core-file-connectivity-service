@@ -3,6 +3,7 @@ const request = require('request-promise');
 
 const OAuth2Strategy = require('../../src/oauth2-strategy');
 const ConnectionBase = require('../../src/connection-base');
+const logger = require('../../src/logger').get();
 
 class OneDrive extends ConnectionBase {
   constructor(strategy, fileName) {
@@ -11,7 +12,7 @@ class OneDrive extends ConnectionBase {
   }
 
   async getData() {
-    console.log('accesstoken', this.accessToken);
+    logger.debug('accesstoken', this.accessToken);
     return request({
       url: `https://api.onedrive.com/v1.0/drive/root:${this.fileName}:/content`,
       headers: {

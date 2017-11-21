@@ -2,9 +2,6 @@ version: "3.3"
 
 services:
   qix-engine:
-    # QIX Engine is configured to run on all worker nodes in the
-    # cluster, and is the service we primarily want to scale up in
-    # this use-case.
     image: qlik/engine:12.79.0
     ports:
       - "9076:9076"
