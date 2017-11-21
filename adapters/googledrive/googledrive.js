@@ -6,7 +6,7 @@ const ConnectionBase = require('../../src/connection-base');
 
 class GoogleDrive extends ConnectionBase {
   constructor(strategy, fileName) {
-    super(strategy, GoogleDrivePassportStrategy);
+    super(strategy);
     this.fileName = fileName;
   }
 

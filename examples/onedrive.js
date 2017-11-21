@@ -1,8 +1,8 @@
-const Outhaul = require('../../src/outhaul.js');
+const Outhaul = require('../src/outhaul.js');
 const request = require('supertest');
 
-const GoogleDriveStrategy = require('../../adapters/googledrive/googledrive.js');
-const OneDriveStrategy = require('../../adapters/onedrive/onedrive.js');
+const GoogleDriveStrategy = require('../adapters/googledrive/googledrive.js');
+const OneDriveStrategy = require('../adapters/onedrive/onedrive.js');
 
 async function run() {
   const GoogleDrive = new GoogleDriveStrategy('811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', 'yi4C3WagMm4J2Ig2Vr4xYbSZ');
@@ -29,6 +29,8 @@ async function run() {
     })
     .expect(200);
 
+  console.log("add connection done");
+
   await request(url).get(res2.text).expect(401);
 
   console.log(`Authentication is needed for onedrive goto: ${url}${res2.text}/authentication`);
@@ -38,9 +40,7 @@ async function run() {
 
     if (authResOnedrive.statusCode === 200) {
       clearInterval(interval);
-
-      const onedriveResult = await request(url).get(res2.text);
-      console.log(onedriveResult.body.toString());
+      console.log(authResOnedrive.body.toString());
     }
   }, 1000);
 }

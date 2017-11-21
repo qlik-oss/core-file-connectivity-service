@@ -6,7 +6,7 @@ const ConnectionBase = require('../../src/connection-base');
 
 class OneDrive extends ConnectionBase {
   constructor(strategy, fileName) {
-    super(strategy, OneDrivePassportStrategy);
+    super(strategy);
     this.fileName = fileName;
   }
 
