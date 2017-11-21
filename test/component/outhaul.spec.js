@@ -1,22 +1,22 @@
 // const Outhaul = require('../../src/outhaul.js');
 // const request = require('supertest');
 //
-// const Mock = require('./adapters/mock');
-// const MockWithAuthentication = require('./adapters/mock-with-authentication');
-// const MockWithLocalPassport = require('./adapters/mock-with-local-passport');
+// const Mock = require('./strategies/mock');
+// const MockWithAuthentication = require('./strategies/mock-with-authentication');
+// const MockWithLocalPassport = require('./strategies/mock-with-local-passport');
 //
-// const adapters = {
-//   mock: Mock,
-//   mock_with_authentication: MockWithAuthentication,
-//   mock_with_local_passport: MockWithLocalPassport,
-// };
+// const strategies = [
+//   Mock,
+//   MockWithAuthentication,
+//   MockWithLocalPassport,
+// ];
 //
 // let outhaul;
 //
 // before(() => {
 //   outhaul = Outhaul({
 //     port: 3000,
-//     adapters,
+//     strategies,
 //   });
 //   outhaul.start();
 // });
