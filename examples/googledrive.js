@@ -3,6 +3,7 @@ const request = require('supertest');
 
 const GoogleDriveStrategy = require('../strategies/googledrive/googledrive.js');
 const OneDriveStrategy = require('../strategies/onedrive/onedrive.js');
+const logger = require('../src/logger').get();
 
 async function run() {
   const GoogleDrive = new GoogleDriveStrategy('811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', 'yi4C3WagMm4J2Ig2Vr4xYbSZ');
@@ -32,7 +33,7 @@ async function run() {
 
   await request(url).get(res.text).expect(401);
 
-  console.log(`Authentication is needed for google drive goto: ${url}${res.text}/authentication`);
+  logger.info(`Authentication is needed for google drive goto: ${url}${res.text}/authentication`);
 
 
   const interval = setInterval(async () => {
@@ -40,7 +41,7 @@ async function run() {
 
     if (authRes.statusCode === 200) {
       clearInterval(interval);
-      console.log(authRes.body.toString());
+      logger.debug(authRes.body.toString());
     }
   }, 1000);
 }

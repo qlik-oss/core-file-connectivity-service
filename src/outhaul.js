@@ -5,6 +5,8 @@ const passport = require('koa-passport');
 const session = require('koa-session');
 const qs = require('query-string');
 
+const logger = require('./logger').get();
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -52,14 +54,14 @@ function outhaul(options) {
   });
 
   router.get(authenticationCallback, async (ctx, next) => {
-    console.log('callbacked');
+    logger.debug('callbacked');
 
     const parsedQs = qs.parse(ctx.request.querystring);
 
     const connection = connections.find(c => c.uuid() === parsedQs.state);
 
     if (connection) {
-      console.log('connection');
+      logger.debug('connection');
       await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken, refreshToken) => {
         connection.authenticationCallback(accessToken, refreshToken);
         ctx.response.body = 'You are authenticated';
@@ -92,11 +94,11 @@ function outhaul(options) {
 
     if (input.connector) {
       if (strategies[input.connector]) {
-        console.log('connector match ', strategies[input.connector]);
+        logger.debug('connector match ', strategies[input.connector]);
 
         const connection = strategies[input.connector].newConnector(input.params);
 
-        console.log('connection ', connection);
+        logger.debug('connection ', connection);
 
         ctx.response.body = addConnection(connection);
       } else {
