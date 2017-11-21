@@ -13,11 +13,13 @@ const strategiesFolderPath = path.resolve(__dirname, '../strategies');
 logger.info(`Strategies path ${strategiesFolderPath}`);
 
 fs.readdirSync(strategiesFolderPath).forEach((file) => {
-  const fullStrategiesPath = path.join(strategiesFolderPath, file, file);
-  logger.info(`Using strategy ${fullStrategiesPath}`);
-  strategies[file] = require(fullStrategiesPath); // eslint-disable-line
+  const fullStrategyPath = path.join(strategiesFolderPath, file, file);
+  logger.info(`Using strategy ${fullStrategyPath}`);
+  strategies.push(require(fullStrategyPath)); // eslint-disable-line
 });
 
 const outhaul = Outhaul({ port: 3000, strategies });
 
 outhaul.start();
+
+logger.info('Outhaul started');

@@ -33,7 +33,9 @@ function outhaul(options) {
       passport.use(passportStrategy);
     }
 
-    strategies[strategy.getName()] = strategy;
+    if (strategy.getName) {
+      strategies[strategy.getName()] = strategy;
+    }
   });
 
   const connections = [];
