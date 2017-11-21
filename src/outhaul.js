@@ -64,7 +64,7 @@ function outhaul(options) {
       logger.debug('connection');
       await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken, refreshToken) => {
         connection.authenticationCallback(accessToken, refreshToken);
-        ctx.response.body = 'You are logged in';
+        ctx.response.body = 'You are authenticated';
       })(ctx, next);
     } else {
       ctx.throw(400, 'Cannot find matching connection with uuid mathing callback state');

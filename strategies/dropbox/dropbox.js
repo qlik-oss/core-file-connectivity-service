@@ -1,63 +1,39 @@
 const DropboxOAuth2Strategy = require('passport-dropbox-oauth2').Strategy;
 const request = require('request');
 
+const OAuth2Strategy = require('../../src/oauth2-strategy');
+const ConnectionBase = require('../../src/connection-base');
 
-class Dropbox {
-  constructor(apiKey, appSecret, filePath, accessToken) {
-    this.apiKey = apiKey;
-    this.appSecret = appSecret;
+class Dropbox extends ConnectionBase {
+  constructor(strategy, filePath) {
+    super(strategy);
     this.filePath = filePath;
-    this.accessToken = accessToken;
-    this.name = 'dropbox';
-    this.authentication = true;
-  }
-
-  initiatedPassportStrategy(callbackUrl) {
-    const that = this;
-
-    this.passportStrategy = new DropboxOAuth2Strategy({
-      apiVersion: '2',
-      clientID: this.apiKey,
-      clientSecret: this.appSecret,
-      callbackURL: callbackUrl,
-    },
-      (accessToken, refreshToken, profile, done) => {
-        that.accessToken = accessToken;
-        return done(undefined, profile);
-      });
-  }
-
-  getName() {
-    return this.name;
   }
 
   getData() {
-    return Dropbox.getData(this.filePath, this.accessToken);
-  }
-
-  authentication() {
-    return this.authentication;
-  }
-
-  authenticated() {
-    return this.accessToken;
-  }
-
-  getPassportStrategy() {
-    return this.passportStrategy;
+    return request({
+      url: 'https://content.dropboxapi.com/2/files/download',
+      headers: {
+        'Dropbox-API-Arg': `{"path": "${this.filePath}"}`,
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
   }
 }
 
-function getData(filePath, accessToken) {
-  return request({
-    url: 'https://content.dropboxapi.com/2/files/download',
-    headers: {
-      'Dropbox-API-Arg': `{"path": "${filePath}"}`,
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+class DropboxStrategy extends OAuth2Strategy {
+  constructor(clientId, clientSecret) {
+    super('Dropbox', DropboxOAuth2Strategy, clientId, clientSecret);
+    this.connector = Dropbox;
+  }
+
+  newConnector(params) {
+    return new Dropbox(this, ...params);
+  }
+
+  setupPassportStrategy(callbackUrl) {
+    return super.setupPassportStrategy(callbackUrl, { apiVersion: '2' });
+  }
 }
 
-Dropbox.getData = getData;
-
-module.exports = Dropbox;
+module.exports = DropboxStrategy;
