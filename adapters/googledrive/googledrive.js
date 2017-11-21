@@ -1,33 +1,13 @@
-const GoogleDriveStrategy = require('passport-google-oauth20').Strategy;
+const GoogleDrivePassportStrategy = require('passport-google-oauth20').Strategy;
 const request = require('request-promise');
 
-class GoogleDrive {
-  constructor(apiKey, appSecret, fileName) {
-    this.apiKey = apiKey;
-    this.appSecret = appSecret;
+const OAuth2Strategy = require('../../src/oauth2-strategy');
+const ConnectionBase = require('../../src/connection-base');
+
+class GoogleDrive extends ConnectionBase {
+  constructor(strategy, fileName) {
+    super(strategy);
     this.fileName = fileName;
-    this.authorizationToken = '';
-    this.name = 'googledrive';
-    this.authentication = true;
-    this.scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
-  }
-
-  initiatedPassportStrategy(callbackUrl) {
-    const that = this;
-
-    this.passportStrategy = new GoogleDriveStrategy({
-      clientID: this.apiKey,
-      clientSecret: this.appSecret,
-      callbackURL: callbackUrl,
-    },
-      (accessToken, refreshToken, profile, done) => {
-        that.accessToken = accessToken;
-        return done(undefined, profile);
-      });
-  }
-
-  getName() {
-    return this.name;
   }
 
   async getData() {
@@ -52,47 +32,18 @@ class GoogleDrive {
       },
     });
   }
+}
 
-  authentication() {
-    return this.authentication;
+class GoogleDriveStrategy extends OAuth2Strategy {
+  constructor(clientId, clientSecret) {
+    const scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
+    super('GoogleDrive', GoogleDrivePassportStrategy, clientId, clientSecret, scope);
+    this.connector = GoogleDrive;
   }
 
-  scope() {
-    return this.scope;
-  }
-
-  authenticated() {
-    return this.accessToken;
-  }
-
-  getPassportStrategy() {
-    return this.passportStrategy;
+  newConnector(params) {
+    return new GoogleDrive(this, ...params);
   }
 }
 
-async function getData() {
-  // Fetch the filelist and match that with the fileName to get file id
-  const response = await request({
-    url: 'https://www.googleapis.com/drive/v3/files',
-    headers: {
-      Authorization: `Bearer ${this.accessToken}`,
-    },
-  });
-
-  const jsonbody = JSON.parse(response);
-  const file = jsonbody.files.find(f => f.name === this.fileName);
-
-  const url = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`;
-
-  return request({
-    url,
-    encoding: null,
-    headers: {
-      Authorization: `Bearer ${this.accessToken}`,
-    },
-  });
-}
-
-GoogleDrive.getData = getData;
-
-module.exports = GoogleDrive;
+module.exports = GoogleDriveStrategy;
