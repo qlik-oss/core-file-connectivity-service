@@ -29,7 +29,7 @@ async function run() {
     })
     .expect(200);
 
-  console.log("add connection done");
+  console.log('add connection done');
 
   await request(url).get(res2.text).expect(401);
 
