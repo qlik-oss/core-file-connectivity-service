@@ -2,20 +2,22 @@ const Outhaul = require('./outhaul');
 const fs = require('fs');
 const path = require('path');
 
-const adapters = {};
+const strategies = [];
 
-// TODO: Make adapters path configurable with environment variable to enable the container to mount a volume of adapters
+// TODO: Make strategies path configurable with environment variable to enable the container to mount a volume of strategies
 
-const adapterFolderPath = path.resolve(__dirname, '../adapters');
+const strategiesFolderPath = path.resolve(__dirname, '../strategies');
 
-console.log(`Adapters path ${adapterFolderPath}`);
+console.log(`Adapters path ${strategiesFolderPath}`);
 
-fs.readdirSync(adapterFolderPath).forEach((file) => {
-  const fullAdapterPath = path.join(adapterFolderPath, file, file);
-  console.log(`Using adapter ${fullAdapterPath}`);
-  adapters[file] = require(fullAdapterPath); // eslint-disable-line
+fs.readdirSync(strategiesFolderPath).forEach((file) => {
+  const fullStrategyPath = path.join(strategiesFolderPath, file, file);
+  console.log(`Using strategy ${fullStrategyPath}`);
+  strategies.push(require(fullStrategyPath)); // eslint-disable-line
 });
 
-const outhaul = Outhaul({ port: 3000, adapters });
+const outhaul = Outhaul({ port: 3000, strategies });
 
 outhaul.start();
+
+console.log("Outhaul started");
