@@ -20,4 +20,4 @@ const outhaul = Outhaul({ port: 3000, strategies });
 
 outhaul.start();
 
-console.log("Outhaul started");
+console.log('Outhaul started');

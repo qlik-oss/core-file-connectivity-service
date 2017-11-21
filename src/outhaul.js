@@ -31,7 +31,7 @@ function outhaul(options) {
       passport.use(passportStrategy);
     }
 
-    if(strategy.getName){
+    if (strategy.getName) {
       strategies[strategy.getName()] = strategy;
     }
   });
