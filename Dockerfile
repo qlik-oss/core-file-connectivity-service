@@ -1,6 +1,6 @@
 FROM node:8-alpine
 
-RUN apk update && apk add bash && apk add findutils && apk add curl && rm -rf /var/cache/apk/*
+RUN apk update && apk add bash && apk add curl && rm -rf /var/cache/apk/*
 RUN mkdir -p /app/qlik/outhaul
 WORKDIR /app/qlik/outhaul
 
