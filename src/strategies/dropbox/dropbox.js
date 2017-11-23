@@ -1,8 +1,8 @@
 const DropboxOAuth2Strategy = require('passport-dropbox-oauth2').Strategy;
 const request = require('request');
 
-const OAuth2Strategy = require('../../src/oauth2-strategy');
-const ConnectionBase = require('../../src/connection-base');
+const OAuth2Strategy = require('../../oauth2-strategy');
+const ConnectionBase = require('../../connection-base');
 
 class Dropbox extends ConnectionBase {
   constructor(strategy, filePath) {

@@ -10,9 +10,5 @@ HEALTHCHECK CMD curl -fs http://localhost:3000/health || exit 1
 COPY package.json ./
 RUN npm install --production --quiet
 COPY src src/
-COPY strategies strategies/
-
-# Run npm install on all strategies containing a package.json
-RUN find ./strategies/* -maxdepth 2 -name package.json -execdir npm install \;
 
 CMD ["npm", "start", "--silent"]
