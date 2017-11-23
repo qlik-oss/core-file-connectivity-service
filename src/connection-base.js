@@ -16,7 +16,7 @@ class ConnectionBase {
     this.refreshToken = refreshToken;
   }
 
-  authentication() {  // eslint-disable-line class-methods-use-this
+  authentication() { // eslint-disable-line class-methods-use-this
     return true;
   }
 

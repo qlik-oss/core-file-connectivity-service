@@ -19,7 +19,7 @@ function outhaul(options) {
   const app = new Koa();
   app.keys = ['hemligt'];
 
-  const port = options.port;
+  const { port } = options;
 
   const strategies = [];
 
