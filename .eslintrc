@@ -1,6 +1,7 @@
 {
     "extends": "airbnb-base",
     "rules": {
+        "import/no-extraneous-dependencies": "off", // Otherwise relative imports in examples folder will fail
         "max-len": "off",
         "import/no-unresolved": 0 // Otherwise npm install had to be executed in each example
     },
