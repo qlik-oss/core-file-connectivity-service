@@ -1,8 +1,8 @@
 const GoogleDrivePassportStrategy = require('passport-google-oauth20').Strategy;
-const request = require('request-promise');
+const request = require('request-promise-native');
 
-const OAuth2Strategy = require('../../src/oauth2-strategy');
-const ConnectionBase = require('../../src/connection-base');
+const OAuth2Strategy = require('../../oauth2-strategy');
+const ConnectionBase = require('../../connection-base');
 
 class GoogleDrive extends ConnectionBase {
   constructor(strategy, fileName) {
