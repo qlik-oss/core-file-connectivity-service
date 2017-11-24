@@ -1,7 +1,7 @@
 const Outhaul = require('../src/outhaul.js');
 const request = require('supertest');
 
-const S3Strategy = require('../strategies/s3/s3.js');
+const S3Strategy = require('../src/strategies/s3/s3.js');
 const logger = require('../src/logger').get();
 
 async function run() {

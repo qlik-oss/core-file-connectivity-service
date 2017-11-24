@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const ConnectionBase = require('../../src/connection-base');
+const ConnectionBase = require('../../connection-base');
 
 class S3 extends ConnectionBase {
   constructor(strategy, accessKeyId, secretAccessKey, bucket, file, region) {
