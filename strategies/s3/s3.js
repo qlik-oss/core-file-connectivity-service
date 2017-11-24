@@ -11,13 +11,12 @@ class S3 extends ConnectionBase {
     this.region = region;
   }
 
-  authentication(){
+  authentication() { // eslint-disable-line
     return false;
   }
 
   getData() {
-
-    AWS.config.update({ accessKeyId: this.accessKeyId, secretAccessKey: this.secretAccessKey, region: this.region});
+    AWS.config.update({ accessKeyId: this.accessKeyId, secretAccessKey: this.secretAccessKey, region: this.region });
 
     const s3 = new AWS.S3();
 
@@ -30,12 +29,8 @@ class S3 extends ConnectionBase {
   }
 }
 
-class S3Strategy{
-  constructor(){
-
-  }
-
-  getName(){
+class S3Strategy {
+  getName() { // eslint-disable-line
     return 'S3';
   }
 
