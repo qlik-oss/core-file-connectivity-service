@@ -1,9 +1,9 @@
 const OneDrivePassportStrategy = require('passport-onedrive').Strategy;
-const request = require('request-promise');
+const request = require('request-promise-native');
 
-const OAuth2Strategy = require('../../src/oauth2-strategy');
-const ConnectionBase = require('../../src/connection-base');
-const logger = require('../../src/logger').get();
+const OAuth2Strategy = require('../../oauth2-strategy');
+const ConnectionBase = require('../../connection-base');
+const logger = require('../../logger').get();
 
 class OneDrive extends ConnectionBase {
   constructor(strategy, fileName) {

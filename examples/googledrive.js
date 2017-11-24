@@ -1,17 +1,14 @@
 const Outhaul = require('../src/outhaul.js');
-const request = require('supertest');
+const request = require('supertest'); // eslint-disable-line import/no-extraneous-dependencies
 
-const GoogleDriveStrategy = require('../strategies/googledrive/googledrive.js');
-const OneDriveStrategy = require('../strategies/onedrive/onedrive.js');
+const GoogleDriveStrategy = require('../src/strategies/googledrive/googledrive.js');
 const logger = require('../src/logger').get();
 
 async function run() {
   const GoogleDrive = new GoogleDriveStrategy('811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com', 'yi4C3WagMm4J2Ig2Vr4xYbSZ');
-  const OneDrive = new OneDriveStrategy('59dac417-3a16-4829-beb6-024d7a649047', 'jiTGLVZ2*&lboywOB9615!]');
 
   const strategies = [
     GoogleDrive,
-    OneDrive,
   ];
 
   const outhaul = Outhaul({

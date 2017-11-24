@@ -8,7 +8,7 @@ const strategies = [];
 
 // TODO: Make strategies path configurable with environment variable to enable the container to mount a volume of strategies
 
-const strategiesFolderPath = path.resolve(__dirname, '../strategies');
+const strategiesFolderPath = path.resolve(__dirname, 'strategies');
 
 logger.info(`Strategies path ${strategiesFolderPath}`);
 
