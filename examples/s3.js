@@ -20,8 +20,8 @@ async function run() {
 
   const url = 'http://localhost:3000';
 
-  const accessKeyId = 'AKIAJDU35PC5CZM2IWCQ';
-  const secretAccessKey = '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';
+  const accessKeyId = 'AKIAJCVKQ6HEWECLXZCA';
+  const secretAccessKey = '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';
   const bucketName = 'stefanenberg';
   const fileName = 'airports.csv';
   const region = 'eu-west-2';
@@ -33,19 +33,9 @@ async function run() {
     })
     .expect(200);
 
-  logger.info('add connection done');
+  const authRes = await request(url).get(res.text);
 
-  await request(url).get(res.text).expect(401);
-
-  logger.info(`Authentication is needed for onedrive goto: ${url}${res.text}/authentication`);
-
-  const interval = setInterval(async () => {
-    const authRes = await request(url).get(res.text);
-    if (authRes.statusCode === 200) {
-      clearInterval(interval);
-      logger.info(authRes.body.toString());
-    }
-  }, 1000);
+  logger.info(authRes.body.toString());
 }
 
 run();
