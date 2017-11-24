@@ -123,7 +123,6 @@ describe('outhaul', () => {
 
 
     it.skip('should be possible to register multiple connections with ');
-
   });
 
   // not possible to register multiple logins with the same strategy
