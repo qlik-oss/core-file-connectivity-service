@@ -20,9 +20,9 @@ async function run() {
 
   const url = 'http://localhost:3000';
 
-  const accessKeyId = 'AKIAJCVKQ6HEWECLXZCA';
-  const secretAccessKey = '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';
-  const bucketName = 'stefanenberg';
+  const accessKeyId = 'xxx';
+  const secretAccessKey = 'xxx';
+  const bucketName = 'xxx';
   const fileName = 'airports.csv';
   const region = 'eu-west-2';
 
