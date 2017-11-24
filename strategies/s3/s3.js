@@ -1,32 +1,47 @@
 const AWS = require('aws-sdk');
+const ConnectionBase = require('../../src/connection-base');
 
-class S3 {
-  constructor(accessKeyId, secretAccessKey, bucket, file, region) {
+class S3 extends ConnectionBase {
+  constructor(strategy, accessKeyId, secretAccessKey, bucket, file, region) {
+    super(strategy, accessKeyId);
     this.accessKeyId = accessKeyId;
     this.secretAccessKey = secretAccessKey;
     this.bucket = bucket;
     this.file = file;
-    this.region = region || 'eu-west-2';
+    this.region = region;
+  }
+
+  authentication(){
+    return false;
   }
 
   getData() {
-    return S3.getData(this.accessKeyId, this.secretAccessKey, this.bucket, this.file, this.region);
+
+    AWS.config.update({ accessKeyId: this.accessKeyId, secretAccessKey: this.secretAccessKey, region: this.region});
+
+    const s3 = new AWS.S3();
+
+    const options = {
+      Bucket: this.bucket,
+      Key: this.file,
+    };
+
+    return s3.getObject(options).createReadStream();
   }
 }
 
-function getData(accessKeyId, secretAccessKey, bucket, file, region) {
-  AWS.config.update({ accessKeyId, secretAccessKey, region: region || 'eu-west-2' });
+class S3Strategy{
+  constructor(){
 
-  const s3 = new AWS.S3();
+  }
 
-  const options = {
-    Bucket: bucket,
-    Key: file,
-  };
+  getName(){
+    return 'S3';
+  }
 
-  return s3.getObject(options).createReadStream();
+  newConnector(params) {
+    return new S3(this, ...params);
+  }
 }
 
-S3.getData = getData;
-
-module.exports = S3;
+module.exports = S3Strategy;
