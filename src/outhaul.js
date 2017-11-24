@@ -35,6 +35,8 @@ function outhaul(options) {
 
     if (strategy.getName) {
       strategies[strategy.getName()] = strategy;
+    } else {
+      logger.warn(`Failed to add strategy: ${strategy}`);
     }
   });
 
@@ -102,10 +104,10 @@ function outhaul(options) {
 
         ctx.response.body = addConnection(connection);
       } else {
-        ctx.response.body = "Couldn't find connector";
+        ctx.throw(404, `Could not find connector: ${input.connector}`);
       }
     } else {
-      ctx.response.body = 'Connector not specified';
+      ctx.throw(400, 'Connector not specified');
     }
   });
 

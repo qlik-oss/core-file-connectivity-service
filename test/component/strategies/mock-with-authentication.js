@@ -2,18 +2,23 @@ class MockWithAuthentication {
   constructor(params) {
     this.params = params;
     this.auth = false;
+    this.name = 'MockWithAuthentication';
+    this.strategyName = 'MockWithAuthentication';
+    this.uuid = '1234';
   }
 
-  getData() {
-    return this.params;
+  getName() {
+    return this.name;
   }
 
-  authenticated() {
-    return this.auth;
-  }
-
-  authentication() {
-    this.auth = true;
+  newConnector() {
+    return {
+      uuid: () => this.uuid,
+      getData: () => this.params,
+      authenticated: () => this.auth,
+      authentication: () => { this.auth = true; },
+      getPassportStrategyName: () => this.strategyName,
+    };
   }
 }
 

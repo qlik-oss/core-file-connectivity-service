@@ -15,6 +15,8 @@ class MockWithLocalPassport {
     this.username = username;
     this.password = password;
     this.auth = false;
+    this.name = 'MockWithLocalPassport';
+    this.uuid = '1234';
 
     const that = this;
 
@@ -30,6 +32,14 @@ class MockWithLocalPassport {
 
   getData() {
     return this.returnData;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  uuid() {
+    return this.uuid;
   }
 
   authenticated() {
