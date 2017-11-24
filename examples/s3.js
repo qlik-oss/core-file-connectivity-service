@@ -1,5 +1,5 @@
 const Outhaul = require('../src/outhaul.js');
-const request = require('supertest');
+const request = require('supertest'); // eslint-disable-line import/no-extraneous-dependencies
 
 const S3Strategy = require('../src/strategies/s3/s3.js');
 const logger = require('../src/logger').get();
