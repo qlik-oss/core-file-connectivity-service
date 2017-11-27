@@ -127,12 +127,16 @@ function outhaul(options) {
   router.delete('/connections/:id', (ctx) => {
     const connection = connections.find(c => c.id === ctx.params.id);
 
-    const idx = connections.indexOf(connection);
-    connections.splice(idx, 1);
+    if (connection) {
+      const idx = connections.indexOf(connection);
+      connections.splice(idx, 1);
 
-    logger.debug('Connection removed: ', connection.id);
+      logger.debug('Connection removed: ', connection.id);
 
-    ctx.response.body = 'ok';
+      ctx.response.body = 'ok';
+    } else {
+      ctx.throw(404, `Could not find connector: ${connection}`);
+    }
   });
 
 
