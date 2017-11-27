@@ -75,33 +75,13 @@ function outhaul(options) {
     }
   });
 
-  // function addConnection(connection) {
-  //   connections.push(connection);
-  //
-  //   const uniqueUrl = `/connections/${connection.uuid()}`;
-  //
-  //   // const uniqueUrl = `/${connection.uuid()}`; router.get(uniqueUrl, async (ctx) => {
-  //   //   if (connection.authenticated === undefined || connection.authenticated()) {
-  //   //     ctx.response.body = await connection.getData();
-  //   //   } else {
-  //   //     ctx.throw(401, 'Authentication is needed to access this connection.');
-  //   //   }
-  //   // });
-  //
-  //   // if (connection.authentication) {
-  //   //   router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
-  //   // }
-  //
-  //   return uniqueUrl;
-  // }
-
   router.get('/connections/:id/authentication', (ctx, next) => {
     const connection = connections.find(c => c.id === ctx.params.id);
 
     if (connection) {
       return passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next);
     }
-    ctx.throw(400, 'No connection matches id');
+    ctx.throw(404, 'No connection matches id');
 
     return next();
   });
@@ -116,10 +96,9 @@ function outhaul(options) {
         ctx.throw(401, 'Authentication is needed to access this connection.');
       }
     } else {
-      ctx.throw(400, 'No connection matches id');
+      ctx.throw(404, 'No connection matches id');
     }
   });
-
 
   router.post('/connections/', async (ctx) => {
     const input = ctx.request.body;
