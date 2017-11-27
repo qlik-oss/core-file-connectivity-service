@@ -2,7 +2,7 @@ class Mock {
   constructor(params) {
     this.params = params;
     this.name = 'Mock';
-    this.uuid = '1234';
+    this.id = '1234';
   }
   getName() {
     return this.name;
@@ -10,7 +10,8 @@ class Mock {
 
   newConnector() {
     return {
-      uuid: () => this.uuid,
+      id: this.id,
+      uuid: () => this.id,
       getData: () => this.params,
     };
   }

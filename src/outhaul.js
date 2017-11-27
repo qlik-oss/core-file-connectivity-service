@@ -75,29 +75,32 @@ function outhaul(options) {
     }
   });
 
-  function addConnection(connection) {
-    connections.push(connection);
+  router.get('/connections/:id/authentication', (ctx, next) => {
+    const connection = connections.find(c => c.id === ctx.params.id);
 
-    const uniqueUrl = `/${connection.uuid()}`;
-    router.get(uniqueUrl, async (ctx) => {
+    if (connection) {
+      return passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next);
+    }
+    ctx.throw(404, 'No connection matches id');
+
+    return next();
+  });
+
+  router.get('/connections/:id', async (ctx) => {
+    const connection = connections.find(c => c.id === ctx.params.id);
+
+    if (connection) {
       if (connection.authenticated === undefined || connection.authenticated()) {
         ctx.response.body = await connection.getData();
       } else {
         ctx.throw(401, 'Authentication is needed to access this connection.');
       }
-    });
-
-    if (connection.authentication) {
-      router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), {
-        scope: connection.scope ? connection.scope : '',
-        state: connection.uuid(),
-      })(ctx, next));
+    } else {
+      ctx.throw(404, 'No connection matches id');
     }
+  });
 
-    return uniqueUrl;
-  }
-
-  router.post('/connections/add', async (ctx) => {
+  router.post('/connections/', async (ctx) => {
     const input = ctx.request.body;
 
     if (input.connector) {
@@ -108,12 +111,31 @@ function outhaul(options) {
 
         logger.debug('connection ', connection);
 
-        ctx.response.body = addConnection(connection);
+        connections.push(connection);
+
+        const uniqueUrl = `/connections/${connection.uuid()}`;
+
+        ctx.response.body = uniqueUrl;
       } else {
         ctx.throw(404, `Could not find connector: ${input.connector}`);
       }
     } else {
       ctx.throw(400, 'Connector not specified');
+    }
+  });
+
+  router.delete('/connections/:id', (ctx) => {
+    const connection = connections.find(c => c.id === ctx.params.id);
+
+    if (connection) {
+      const idx = connections.indexOf(connection);
+      connections.splice(idx, 1);
+
+      logger.debug('Connection removed: ', connection.id);
+
+      ctx.response.body = 'ok';
+    } else {
+      ctx.throw(404, `Could not find connection: ${ctx.params.id}`);
     }
   });
 
@@ -130,7 +152,6 @@ function outhaul(options) {
   return {
     start,
     close,
-    addConnection,
   };
 }
 

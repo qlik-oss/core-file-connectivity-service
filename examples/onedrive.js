@@ -20,7 +20,7 @@ async function run() {
 
   const url = 'http://localhost:3000';
 
-  const res = await request(url).post('/connections/add')
+  const res = await request(url).post('/connections/')
     .send({
       connector: 'OneDrive',
       params: ['/airports.csv'],

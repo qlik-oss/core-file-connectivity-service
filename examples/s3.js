@@ -26,7 +26,7 @@ async function run() {
   const fileName = 'airports.csv';
   const region = 'eu-west-2';
 
-  const res = await request(url).post('/connections/add')
+  const res = await request(url).post('/connections/')
     .send({
       connector: 'S3',
       params: [accessKeyId, secretAccessKey, bucketName, fileName, region],
