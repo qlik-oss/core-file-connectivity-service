@@ -95,27 +95,27 @@ function outhaul(options) {
   //   return uniqueUrl;
   // }
 
-  router.get('/connections/:id/authentication', (ctx, next) =>
-  {
-    let connection = connections.find((c) => c.id === ctx.params.id);
+  router.get('/connections/:id/authentication', (ctx, next) => {
+    const connection = connections.find(c => c.id === ctx.params.id);
 
-    if(connection){
-      return  passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next);
-    }else{
-      ctx.throw(400, 'No connection matches id');
+    if (connection) {
+      return passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next);
     }
+    ctx.throw(400, 'No connection matches id');
+
+    return next();
   });
 
   router.get('/connections/:id', async (ctx) => {
-    let connection = connections.find((c) => c.id === ctx.params.id);
+    const connection = connections.find(c => c.id === ctx.params.id);
 
-    if(connection){
+    if (connection) {
       if (connection.authenticated === undefined || connection.authenticated()) {
         ctx.response.body = await connection.getData();
       } else {
         ctx.throw(401, 'Authentication is needed to access this connection.');
       }
-    }else{
+    } else {
       ctx.throw(400, 'No connection matches id');
     }
   });
@@ -146,12 +146,12 @@ function outhaul(options) {
   });
 
   router.delete('/connections/:id', (ctx) => {
-    let connection = connections.find((c) => c.id === ctx.params.id);
+    const connection = connections.find(c => c.id === ctx.params.id);
 
-    let idx = connections.indexOf(connection);
+    const idx = connections.indexOf(connection);
     connections.splice(idx, 1);
 
-    logger.debug("Connection removed: ", connection.id);
+    logger.debug('Connection removed: ', connection.id);
 
     ctx.response.body = 'ok';
   });
@@ -168,7 +168,7 @@ function outhaul(options) {
 
   return {
     start,
-    close
+    close,
   };
 }
 

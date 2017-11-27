@@ -5,6 +5,7 @@ const Mock = require('./strategies/mock');
 const MockWithLocalPassportStrategy = require('./strategies/mock-with-local-passport');
 
 const returnData = 'mock data';
+
 const strategies = [
   new Mock(returnData),
   new MockWithLocalPassportStrategy(returnData, 'admin', 'password'),
@@ -32,7 +33,7 @@ describe('outhaul', () => {
 
   describe('POST /connections/add', () => {
     it('should return 400 if connector was not specified', async () => {
-      await request(url).post('/connections/add')
+      await request(url).post('/connections/')
         .send({
           params: [returnData],
         })
@@ -40,7 +41,7 @@ describe('outhaul', () => {
     });
 
     it('should return 404 for a nonexisting connector', async () => {
-      await request(url).post('/connections/add')
+      await request(url).post('/connections/')
         .send({
           connector: 'Nonexisting_Connector',
           params: [returnData],
@@ -49,7 +50,7 @@ describe('outhaul', () => {
     });
 
     it("should have access to data if a connection doesn't require authentication", async () => {
-      const res = await request(url).post('/connections/add')
+      const res = await request(url).post('/connections/')
         .send({
           connector: 'Mock',
           params: [returnData],
@@ -61,7 +62,7 @@ describe('outhaul', () => {
     });
 
     it('should not have access to data if a connection is not authenticated', async () => {
-      const res = await request(url).post('/connections/add')
+      const res = await request(url).post('/connections/')
         .send({
           connector: 'MockWithLocalPassport',
           params: [returnData],
@@ -72,7 +73,7 @@ describe('outhaul', () => {
     });
 
     it('should not have access to data if wrong credentials are used', async () => {
-      const res = await request(url).post('/connections/add')
+      const res = await request(url).post('/connections/')
         .send({
           connector: 'MockWithLocalPassport',
           params: [returnData],
@@ -89,7 +90,7 @@ describe('outhaul', () => {
     });
 
     it.skip('should be possible to authenticate with local passport strategy', async () => {
-      const res = await request(url).post('/connections/add')
+      const res = await request(url).post('/connections/')
         .send({
           connector: 'MockWithLocalPassport',
           params: [returnData],
