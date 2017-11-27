@@ -2,14 +2,12 @@ const Outhaul = require('../../src/outhaul.js');
 const request = require('supertest');
 
 const Mock = require('./strategies/mock');
-const MockWithAuthentication = require('./strategies/mock-with-authentication');
-const MockWithLocalPassport = require('./strategies/mock-with-local-passport');
+const MockWithLocalPassportStrategy = require('./strategies/mock-with-local-passport');
 
 const returnData = 'mock data';
 const strategies = [
   new Mock(returnData),
-  new MockWithAuthentication(returnData),
-  new MockWithLocalPassport(returnData),
+  new MockWithLocalPassportStrategy(returnData, 'admin', 'password'),
 ];
 
 let outhaul;
@@ -65,7 +63,7 @@ describe('outhaul', () => {
     it('should not have access to data if a connection is not authenticated', async () => {
       const res = await request(url).post('/connections/add')
         .send({
-          connector: 'MockWithAuthentication',
+          connector: 'MockWithLocalPassport',
           params: [returnData],
         })
         .expect(200);
@@ -73,41 +71,30 @@ describe('outhaul', () => {
       await request(url).get(res.text).expect(401);
     });
 
-    it.skip('should have access to data if a connection is authenticated', async () => {
+    it('should not have access to data if wrong credentials are used', async () => {
       const res = await request(url).post('/connections/add')
         .send({
-          connector: 'MockWithAuthentication',
+          connector: 'MockWithLocalPassport',
           params: [returnData],
         })
         .expect(200);
 
-      await request(url).post(`${res.text}/authentication`).expect(200);
-
-      const finalRes = await request(url).get(res.text).expect(200);
-      expect(finalRes.text).to.eql(returnData);
-    });
-
-    it.skip('should be authenticatate with local passport strategy', async () => {
-      const res = await request(url).post('/connections/add')
-        .send({
-          connector: 'mock_with_local_passport',
-          params: [returnData, 'admin', 'password'],
-        })
-        .expect(200);
-
-      await request(url).get(res.text).expect(401);
-
-
-      // Faulty login attempt
+      // Wrong credentials
       await request(url)
         .post(`${res.text}/authentication`)
         .send({
           username: 'wrong',
           password: 'faulty',
         });
+    });
 
-      await request(url).get(res.text).expect(401);
-
+    it.skip('should be possible to authenticate with local passport strategy', async () => {
+      const res = await request(url).post('/connections/add')
+        .send({
+          connector: 'MockWithLocalPassport',
+          params: [returnData],
+        })
+        .expect(200);
 
       // Correct login
       await request(url)
@@ -120,12 +107,7 @@ describe('outhaul', () => {
       const finalRes = await request(url).get(res.text).expect(200);
       expect(finalRes.text).to.eql(returnData);
     });
-
-
-    it.skip('should be possible to register multiple connections with ');
   });
-
-  // not possible to register multiple logins with the same strategy
 });
 
 afterEach(() => {

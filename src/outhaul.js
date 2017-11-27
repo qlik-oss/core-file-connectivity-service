@@ -19,22 +19,22 @@ function outhaul(options) {
   const app = new Koa();
   app.keys = ['hemligt'];
 
-  const { port } = options;
+  const {
+    port,
+  } = options;
 
   const strategies = [];
 
   const authenticationCallback = '/oauth2/callback';
 
   options.strategies.forEach((strategy) => {
-    if (strategy.setupPassportStrategy) {
-      const callbackUrl = `http://localhost:3000${authenticationCallback}`; // Refactor!!!,
-      const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
-
-      passport.use(passportStrategy);
-    }
-
     if (strategy.getName) {
       strategies[strategy.getName()] = strategy;
+      if (strategy.setupPassportStrategy) {
+        const callbackUrl = `http://localhost:3000${authenticationCallback}`; // Refactor!!!,
+        const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
+        passport.use(passportStrategy);
+      }
     } else {
       logger.warn(`Failed to add strategy: ${strategy}`);
     }
@@ -64,7 +64,9 @@ function outhaul(options) {
 
     if (connection) {
       logger.debug('connection');
-      await passport.authenticate(connection.getPassportStrategyName(), { failureRedirect: '/login' }, (err, accessToken, refreshToken) => {
+      await passport.authenticate(connection.getPassportStrategyName(), {
+        failureRedirect: '/login',
+      }, (err, accessToken, refreshToken) => {
         connection.authenticationCallback(accessToken, refreshToken);
         ctx.response.body = 'You are authenticated';
       })(ctx, next);
@@ -76,7 +78,8 @@ function outhaul(options) {
   function addConnection(connection) {
     connections.push(connection);
 
-    const uniqueUrl = `/${connection.uuid()}`; router.get(uniqueUrl, async (ctx) => {
+    const uniqueUrl = `/${connection.uuid()}`;
+    router.get(uniqueUrl, async (ctx) => {
       if (connection.authenticated === undefined || connection.authenticated()) {
         ctx.response.body = await connection.getData();
       } else {
@@ -85,7 +88,10 @@ function outhaul(options) {
     });
 
     if (connection.authentication) {
-      router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
+      router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), {
+        scope: connection.scope ? connection.scope : '',
+        state: connection.uuid(),
+      })(ctx, next));
     }
 
     return uniqueUrl;
