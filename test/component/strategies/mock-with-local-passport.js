@@ -1,44 +1,37 @@
-const passport = require('koa-passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
+const OAuth2Strategy = require('../../../src/oauth2-strategy');
+const ConnectionBase = require('../../../src/connection-base');
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-class MockWithLocalPassport {
-  constructor(returnData, username, password) {
+class MockWithLocalPassport extends ConnectionBase {
+  constructor(strategy, returnData) {
+    super(strategy);
     this.returnData = returnData;
-    this.username = username;
-    this.password = password;
-    this.auth = false;
-
-    const that = this;
-
-    passport.use(new LocalStrategy((userName, pwd, done) => {
-      if (userName === that.username && pwd === that.password) {
-        that.auth = true;
-        return done(null, {});
-      }
-
-      return done(null, false);
-    }));
+    this.name = 'MockWithLocalPassport';
   }
 
   getData() {
     return this.returnData;
   }
+}
 
-  authenticated() {
-    return this.auth;
+class MockWithLocalPassportStrategy extends OAuth2Strategy {
+  constructor(returnData, clientId, clientSecret) {
+    super('MockWithLocalPassport', LocalStrategy, clientId, clientSecret);
+    this.connector = MockWithLocalPassport;
+    this.returnData = returnData;
   }
 
-  authentication() { // eslint-disable-line
-    return passport.authenticate('local');
+  newConnector() {
+    return new MockWithLocalPassport(this, this.returnData);
+  }
+
+  setupPassportStrategy(callbackUrl) {
+    return super.setupPassportStrategy(callbackUrl, {
+      apiVersion: '2',
+    });
   }
 }
 
-module.exports = MockWithLocalPassport;
+
+module.exports = MockWithLocalPassportStrategy;

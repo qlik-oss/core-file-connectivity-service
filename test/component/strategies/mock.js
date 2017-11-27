@@ -1,10 +1,18 @@
 class Mock {
   constructor(params) {
     this.params = params;
+    this.name = 'Mock';
+    this.uuid = '1234';
+  }
+  getName() {
+    return this.name;
   }
 
-  getData() {
-    return this.params;
+  newConnector() {
+    return {
+      uuid: () => this.uuid,
+      getData: () => this.params,
+    };
   }
 }
 
