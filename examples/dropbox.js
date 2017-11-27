@@ -20,16 +20,16 @@ async function run() {
 
   const url = 'http://localhost:3000';
 
-  const res = await request(url).post('/connections/add')
+  const res = await request(url).post('/connections/')
     .send({
       connector: 'Dropbox',
       params: ['/airports.csv'],
     })
     .expect(200);
 
-  logger.info('add connection done');
+  logger.info('add connection done ', res.text);
 
-  await request(url).get(res.text).expect(401);
+  // await request(url).get(res.text).expect(401);
 
   logger.info(`Authentication is needed for onedrive goto: ${url}${res.text}/authentication`);
 

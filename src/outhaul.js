@@ -71,25 +71,53 @@ function outhaul(options) {
     }
   });
 
-  function addConnection(connection) {
-    connections.push(connection);
+  // function addConnection(connection) {
+  //   connections.push(connection);
+  //
+  //   const uniqueUrl = `/connections/${connection.uuid()}`;
+  //
+  //   // const uniqueUrl = `/${connection.uuid()}`; router.get(uniqueUrl, async (ctx) => {
+  //   //   if (connection.authenticated === undefined || connection.authenticated()) {
+  //   //     ctx.response.body = await connection.getData();
+  //   //   } else {
+  //   //     ctx.throw(401, 'Authentication is needed to access this connection.');
+  //   //   }
+  //   // });
+  //
+  //   // if (connection.authentication) {
+  //   //   router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
+  //   // }
+  //
+  //   return uniqueUrl;
+  // }
 
-    const uniqueUrl = `/${connection.uuid()}`; router.get(uniqueUrl, async (ctx) => {
+  router.get('/connections/:id/authentication', (ctx, next) =>
+  {
+    let connection = connections.find((c) => c.id === ctx.params.id);
+
+    if(connection){
+      return  passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next);
+    }else{
+      ctx.throw(400, 'No connection matches id');
+    }
+  });
+
+  router.get('/connections/:id', async (ctx) => {
+    let connection = connections.find((c) => c.id === ctx.params.id);
+
+    if(connection){
       if (connection.authenticated === undefined || connection.authenticated()) {
         ctx.response.body = await connection.getData();
       } else {
         ctx.throw(401, 'Authentication is needed to access this connection.');
       }
-    });
-
-    if (connection.authentication) {
-      router.get(`${uniqueUrl}/authentication`, (ctx, next) => passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next));
+    }else{
+      ctx.throw(400, 'No connection matches id');
     }
+  });
 
-    return uniqueUrl;
-  }
 
-  router.post('/connections/add', async (ctx) => {
+  router.post('/connections/', async (ctx) => {
     const input = ctx.request.body;
 
     if (input.connector) {
@@ -100,13 +128,28 @@ function outhaul(options) {
 
         logger.debug('connection ', connection);
 
-        ctx.response.body = addConnection(connection);
+        connections.push(connection);
+
+        const uniqueUrl = `/connections/${connection.uuid()}`;
+
+        ctx.response.body = uniqueUrl;
       } else {
         ctx.response.body = "Couldn't find connector";
       }
     } else {
       ctx.response.body = 'Connector not specified';
     }
+  });
+
+  router.delete('/connections/:id', (ctx) => {
+    let connection = connections.find((c) => c.id === ctx.params.id);
+
+    let idx = connections.indexOf(connection);
+    connections.splice(idx, 1);
+
+    logger.debug("Connection removed: ", connection.id);
+
+    ctx.response.body = 'ok';
   });
 
 
@@ -121,8 +164,7 @@ function outhaul(options) {
 
   return {
     start,
-    close,
-    addConnection,
+    close
   };
 }
 
