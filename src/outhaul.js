@@ -135,7 +135,7 @@ function outhaul(options) {
 
       ctx.response.body = 'ok';
     } else {
-      ctx.throw(404, `Could not find connector: ${connection}`);
+      ctx.throw(404, `Could not find connector: ${ctx.params.id}`);
     }
   });
 
