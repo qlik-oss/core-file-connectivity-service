@@ -56,7 +56,7 @@ Make sure to specify the right `region` where the bucket exists.
 - Move files in [data/](/data) to the a bucket in s3 (https://console.aws.amazon.com/s3/home).
 - Enter your accessKeyId, secretAccessKey, bucket, region in [/examples/s3.js](/examples/s3.js)
 - Start QIX Engine
-- Run: node examples/onedrive.js
+- Run: node examples/s3.js
 - Follow the instructions in the console
 
 
