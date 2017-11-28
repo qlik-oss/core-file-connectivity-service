@@ -21,7 +21,7 @@ beforeEach(() => {
   outhaul.start();
 });
 
-const url = 'http://localhost:3000';
+const url = 'http://localhost:3000/v1';
 
 describe('outhaul', () => {
   describe('GET /health', () => {

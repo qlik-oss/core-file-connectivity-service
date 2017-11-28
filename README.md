@@ -8,12 +8,21 @@ Outhaul is a service built to simplify accessing data sources. Connection strate
 ### Connection strategies
 The main purpose of the connection strategy is to access a data source. The data from the source can be of any kind but the connection strategy needs to transform it to a tabular format suited for QIX Engine, csv, xlsx among others. If the source data is in a tabular format then the connection strategy should return as is.
 
-This is the workflow 
+This is the workflow
 <img src="./docs/images/flow.png" width="500">
 
 Another usage for the connection strategy is to preprocess the data by transforming and cleansing it, this can reduce complexity of the load script.
 
+### Generating the OpenAPI Specification
+
+Outhauls's REST API is specified in the [api-doc.yml](./docs/api-doc.yml) [OpenAPI](https://www.openapis.org/) document. The OpenAPI specification is generated from JSDoc by running:
+
+```sh
+npm run generate-openapi
+```
+
 ### Authentication
+
 The connection strategy is responsible for handling authentication. Outhaul will define the required authentication HTTP endpoint needed by its connection strategies, like OAuth2. It is worth noticing that data sources that enforces OAuth2 authentication need lots of user involvement with sign in and can be hard to automate. It is recommended to use API keys instead of OAuth2 to programmatically access the data.
 
 ## Contributing
