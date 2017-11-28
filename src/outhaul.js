@@ -3,6 +3,9 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 const session = require('koa-session');
+const swagger = require('swagger2');
+const swagger2koa = require('swagger2-koa');
+const path = require('path');
 const qs = require('query-string');
 
 const logger = require('./logger').get();
@@ -41,16 +44,35 @@ function outhaul(options) {
   });
 
   const connections = [];
-  const router = new Router();
+  const apiVersion = 'v1';
+  const router = new Router({
+    prefix: `/${apiVersion}`,
+  });
 
   let appInstance;
+
+  const document = swagger.loadDocumentSync(path.join(__dirname, './../docs/api-doc.yml'));
 
   app.use(passport.initialize());
   app.use(session({}, app));
 
   app.use(bodyParser());
+  app.use(swagger2koa.ui(document, '/openapi'));
   app.use(router.routes());
 
+  /**
+   * @swagger
+   * /health:
+   *   get:
+   *     description: Returns health status of the service
+   *     produces:
+   *       - application/json
+   *     responses:
+   *       200:
+   *         description: successful operation
+   *         schema:
+   *           type: string
+   */
   router.get('/health', (ctx) => {
     ctx.response.body = 'ok';
   });
@@ -75,17 +97,58 @@ function outhaul(options) {
     }
   });
 
+  /**
+   * @swagger
+   * /connections/{id}/authentication:
+   *   get:
+   *     description: Get authentication for a connection
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *     - name: id
+   *       in: path
+   *       type: string
+   *       required: true
+   *     responses:
+   *       200:
+   *         description: Successful operation
+   *       404:
+   *         description: Connector not found
+   */
   router.get('/connections/:id/authentication', (ctx, next) => {
     const connection = connections.find(c => c.id === ctx.params.id);
 
     if (connection) {
-      return passport.authenticate(connection.getPassportStrategyName(), { scope: connection.scope ? connection.scope : '', state: connection.uuid() })(ctx, next);
+      return passport.authenticate(connection.getPassportStrategyName(), {
+        scope: connection.scope ? connection.scope : '',
+        state: connection.uuid(),
+      })(ctx, next);
     }
     ctx.throw(404, 'No connection matches id');
 
     return next();
   });
 
+  /**
+   * @swagger
+   * /connections/{id}:
+   *   get:
+   *     description: Get data from a connector
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *     - name: id
+   *       in: path
+   *       type: string
+   *       required: true
+   *     responses:
+   *       200:
+   *         description: Successful operation
+   *       401:
+   *         description: Authentication needed
+   *       404:
+   *         description: Connector not found
+   */
   router.get('/connections/:id', async (ctx) => {
     const connection = connections.find(c => c.id === ctx.params.id);
 
@@ -100,7 +163,25 @@ function outhaul(options) {
     }
   });
 
-  router.post('/connections/', async (ctx) => {
+  /**
+   * @swagger
+   * /connections:
+   *   post:
+   *     description: Create a new connection
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *     - name: body
+   *       in: body
+   *       schema:
+   *         $ref: '#/definitions/connection'
+   *     responses:
+   *       200:
+   *         description: Successful operation
+   *       404:
+   *         description: Connector not found
+   */
+  router.post('/connections', async (ctx) => {
     const input = ctx.request.body;
 
     if (input.connector) {
@@ -124,6 +205,22 @@ function outhaul(options) {
     }
   });
 
+  /**
+   * @swagger
+   * /connections/{id}:
+   *   delete:
+   *     description: Delete a connection
+   *     parameters:
+   *     - name: id
+   *       in: path
+   *       type: string
+   *       required: true
+   *     responses:
+   *       200:
+   *         description: Successful operation
+   *       404:
+   *         description: Connector not found
+   */
   router.delete('/connections/:id', (ctx) => {
     const connection = connections.find(c => c.id === ctx.params.id);
 
@@ -154,5 +251,19 @@ function outhaul(options) {
     close,
   };
 }
+
+/**
+ * @swagger
+ * definitions:
+ *   connection:
+ *     type: object
+ *     properties:
+ *       connector:
+ *         description: Name of connector
+ *         type: string
+ *       params:
+ *         description: Parameters to pass to the connector
+ *         type: array
+ */
 
 module.exports = outhaul;
