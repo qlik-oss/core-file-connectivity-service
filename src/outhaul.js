@@ -3,9 +3,6 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
 const session = require('koa-session');
-const swagger = require('swagger2');
-const swagger2koa = require('swagger2-koa');
-const path = require('path');
 const qs = require('query-string');
 
 const logger = require('./logger').get();
@@ -51,14 +48,11 @@ function outhaul(options) {
 
   let appInstance;
 
-  const document = swagger.loadDocumentSync(path.join(__dirname, './../docs/api-doc.yml'));
-
-  app.use(passport.initialize());
-  app.use(session({}, app));
-
-  app.use(bodyParser());
-  app.use(swagger2koa.ui(document, '/openapi'));
-  app.use(router.routes());
+  app
+    .use(passport.initialize())
+    .use(session({}, app))
+    .use(bodyParser())
+    .use(router.routes());
 
   /**
    * @swagger
