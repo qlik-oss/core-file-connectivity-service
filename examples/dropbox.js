@@ -18,9 +18,11 @@ async function run() {
 
   outhaul.start();
 
-  const url = 'http://localhost:3000';
+  console.log("started");
 
-  const res = await request(url).post('/connections/')
+  const url = 'http://localhost:3000/v1';
+
+  const res = await request(url).post('/connections')
     .send({
       connector: 'Dropbox',
       params: ['/airports.csv'],

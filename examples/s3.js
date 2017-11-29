@@ -18,7 +18,7 @@ async function run() {
 
   outhaul.start();
 
-  const url = 'http://localhost:3000';
+  const url = 'http://localhost:3000/v1';
 
   const accessKeyId = 'xxx';
   const secretAccessKey = 'xxx';
@@ -26,7 +26,7 @@ async function run() {
   const fileName = 'airports.csv';
   const region = 'eu-west-2';
 
-  const res = await request(url).post('/connections/')
+  const res = await request(url).post('/connections')
     .send({
       connector: 'S3',
       params: [accessKeyId, secretAccessKey, bucketName, fileName, region],
