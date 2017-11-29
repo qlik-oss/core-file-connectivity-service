@@ -2,17 +2,21 @@ const AWS = require('aws-sdk');
 const ConnectionBase = require('../../connection-base');
 
 class S3 extends ConnectionBase {
-  constructor(strategy, accessKeyId, secretAccessKey, bucket, file, region) {
-    super(strategy, accessKeyId);
-    this.accessKeyId = accessKeyId;
-    this.secretAccessKey = secretAccessKey;
-    this.bucket = bucket;
-    this.file = file;
-    this.region = region;
+  constructor(strategy, settings) {
+    super(strategy, settings.accessKeyId);
+    this.accessKeyId = settings.accessKeyId;
+    this.secretAccessKey = settings.secretAccessKey;
+    this.bucketName = settings.bucketName;
+    this.fileName = settings.fileName;
+    this.region = settings.region;
   }
 
   authentication() { // eslint-disable-line
     return false;
+  }
+
+  authenticated(){
+    return !!this.accessKeyId;
   }
 
   getData() {
@@ -21,8 +25,8 @@ class S3 extends ConnectionBase {
     const s3 = new AWS.S3();
 
     const options = {
-      Bucket: this.bucket,
-      Key: this.file,
+      Bucket: this.bucketName,
+      Key: this.fileName,
     };
 
     return s3.getObject(options).createReadStream();
@@ -35,7 +39,7 @@ class S3Strategy {
   }
 
   newConnector(params) {
-    return new S3(this, ...params);
+    return new S3(this, params);
   }
 }
 

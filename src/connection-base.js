@@ -1,14 +1,10 @@
 const uuid = require('uuid/v1');
 
 class ConnectionBase {
-  constructor(strategy, accessToken) {
+  constructor(strategy, settings) {
     this.id = uuid();
     this.strategy = strategy;
-    this.accessToken = accessToken;
-  }
-
-  uuid() {
-    return this.id;
+    this.accessToken = settings.accessToken;
   }
 
   authenticationCallback(accessToken, refreshToken) {
