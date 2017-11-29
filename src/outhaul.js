@@ -56,7 +56,7 @@ function outhaul(options) {
   function removeConnection(connection) {
     const idx = connections.indexOf(connection);
     connections.splice(idx, 1);
-    logger.debug('Connection removed: ', connection.id);
+    logger.info('Connection removed: ', connection.id);
   }
 
   app
