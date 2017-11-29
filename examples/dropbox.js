@@ -17,9 +17,7 @@ async function run() {
   });
 
   outhaul.start();
-
-  console.log("started");
-
+  
   const url = 'http://localhost:3000/v1';
 
   const res = await request(url).post('/connections')
