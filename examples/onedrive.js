@@ -27,9 +27,9 @@ async function run() {
     })
     .expect(200);
 
-  logger.debug('add connection done');
+  logger.info('add connection done');
 
-  await request(url).get(res.text).expect(401);
+  await request(url).get(res.text);
 
   logger.info(`Authentication is needed for onedrive goto: ${url}${res.text}/authentication`);
 
@@ -38,7 +38,7 @@ async function run() {
 
     if (authResOnedrive.statusCode === 200) {
       clearInterval(interval);
-      logger.debug(authResOnedrive.body.toString());
+      logger.info(JSON.stringify(authResOnedrive));
     }
   }, 1000);
 }
