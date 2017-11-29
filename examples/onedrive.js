@@ -23,11 +23,11 @@ async function run() {
   const res = await request(url).post('/connections')
     .send({
       connector: 'OneDrive',
-      params: ['/airports.csv'],
+      params: { fileName: '/airports.csv' },
     })
     .expect(200);
 
-  logger.debug('add connection done');
+  logger.info('add connection done');
 
   await request(url).get(res.text).expect(401);
 
@@ -38,7 +38,7 @@ async function run() {
 
     if (authResOnedrive.statusCode === 200) {
       clearInterval(interval);
-      logger.debug(authResOnedrive.body.toString());
+      logger.info(JSON.stringify(authResOnedrive));
     }
   }, 1000);
 }

@@ -31,7 +31,7 @@ function outhaul(options) {
     if (strategy.getName) {
       strategies[strategy.getName()] = strategy;
       if (strategy.setupPassportStrategy) {
-        const callbackUrl = `http://localhost:3000${authenticationCallback}`; // Refactor!!!,
+        const callbackUrl = `http://localhost:3000/v1${authenticationCallback}`; // Refactor!!!,
         const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
         passport.use(passportStrategy);
       }
@@ -56,7 +56,7 @@ function outhaul(options) {
   function removeConnection(connection) {
     const idx = connections.indexOf(connection);
     connections.splice(idx, 1);
-    logger.debug('Connection removed: ', connection.id);
+    logger.info('Connection removed: ', connection.id);
   }
 
   app
@@ -84,7 +84,6 @@ function outhaul(options) {
 
   router.get(authenticationCallback, async (ctx, next) => {
     logger.debug('callbacked');
-
     const parsedQs = qs.parse(ctx.request.querystring);
 
     const connection = getConnection(parsedQs.state);
@@ -264,8 +263,8 @@ function outhaul(options) {
  *         description: Name of connector
  *         type: string
  *       params:
- *         description: Parameters to pass to the connector
- *         type: array
+ *         description: Settings to pass to the connector
+ *         type: object
  */
 
 module.exports = outhaul;

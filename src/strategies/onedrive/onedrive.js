@@ -6,9 +6,9 @@ const ConnectionBase = require('../../connection-base');
 const logger = require('../../logger').get();
 
 class OneDrive extends ConnectionBase {
-  constructor(strategy, fileName) {
-    super(strategy);
-    this.fileName = fileName;
+  constructor(strategy, settings) {
+    super(strategy, settings);
+    this.fileName = settings.fileName;
   }
 
   async getData() {
@@ -30,7 +30,7 @@ class OneDriveStrategy extends OAuth2Strategy {
   }
 
   newConnector(params) {
-    return new OneDrive(this, ...params);
+    return new OneDrive(this, params);
   }
 }
 

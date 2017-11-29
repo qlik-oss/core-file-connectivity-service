@@ -5,9 +5,9 @@ const OAuth2Strategy = require('../../oauth2-strategy');
 const ConnectionBase = require('../../connection-base');
 
 class Dropbox extends ConnectionBase {
-  constructor(strategy, filePath) {
-    super(strategy);
-    this.filePath = filePath;
+  constructor(strategy, settings) {
+    super(strategy, settings);
+    this.filePath = settings.filePath;
   }
 
   getData() {
@@ -28,7 +28,7 @@ class DropboxStrategy extends OAuth2Strategy {
   }
 
   newConnector(params) {
-    return new Dropbox(this, ...params);
+    return new Dropbox(this, params);
   }
 
   setupPassportStrategy(callbackUrl) {
