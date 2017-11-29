@@ -43,10 +43,21 @@ function outhaul(options) {
   const connections = [];
   const apiVersion = 'v1';
   const router = new Router({
+
     prefix: `/${apiVersion}`,
   });
 
   let appInstance;
+
+  function getConnection(connectionId) {
+    return connections.find(c => c.id === connectionId);
+  }
+
+  function removeConnection(connection) {
+    const idx = connections.indexOf(connection);
+    connections.splice(idx, 1);
+    logger.debug('Connection removed: ', connection.id);
+  }
 
   app
     .use(passport.initialize())
@@ -76,7 +87,7 @@ function outhaul(options) {
 
     const parsedQs = qs.parse(ctx.request.querystring);
 
-    const connection = connections.find(c => c.uuid() === parsedQs.state);
+    const connection = getConnection(parsedQs.state);
 
     if (connection) {
       logger.debug('connection');
@@ -87,7 +98,7 @@ function outhaul(options) {
         ctx.response.body = 'You are authenticated';
       })(ctx, next);
     } else {
-      ctx.throw(400, 'Cannot find matching connection with uuid mathing callback state');
+      ctx.throw(400, 'Cannot find matching connection with id mathing callback state');
     }
   });
 
@@ -110,12 +121,12 @@ function outhaul(options) {
    *         description: Connector not found
    */
   router.get('/connections/:id/authentication', (ctx, next) => {
-    const connection = connections.find(c => c.id === ctx.params.id);
+    const connection = getConnection(ctx.params.id);
 
     if (connection) {
       return passport.authenticate(connection.getPassportStrategyName(), {
         scope: connection.scope ? connection.scope : '',
-        state: connection.uuid(),
+        state: connection.id,
       })(ctx, next);
     }
     ctx.throw(404, 'No connection matches id');
@@ -144,7 +155,7 @@ function outhaul(options) {
    *         description: Connector not found
    */
   router.get('/connections/:id', async (ctx) => {
-    const connection = connections.find(c => c.id === ctx.params.id);
+    const connection = getConnection(ctx.params.id);
 
     if (connection) {
       if (connection.authenticated === undefined || connection.authenticated()) {
@@ -188,7 +199,7 @@ function outhaul(options) {
 
         connections.push(connection);
 
-        const uniqueUrl = `/connections/${connection.uuid()}`;
+        const uniqueUrl = `/connections/${connection.id}`;
 
         ctx.response.body = uniqueUrl;
       } else {
@@ -216,13 +227,10 @@ function outhaul(options) {
    *         description: Connector not found
    */
   router.delete('/connections/:id', (ctx) => {
-    const connection = connections.find(c => c.id === ctx.params.id);
+    const connection = getConnection(ctx.params.id);
 
     if (connection) {
-      const idx = connections.indexOf(connection);
-      connections.splice(idx, 1);
-
-      logger.debug('Connection removed: ', connection.id);
+      removeConnection(connection);
 
       ctx.response.body = 'ok';
     } else {
