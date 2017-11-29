@@ -7,7 +7,7 @@ const ConnectionBase = require('../../connection-base');
 class GoogleDrive extends ConnectionBase {
   constructor(strategy, settings) {
     super(strategy, settings);
-    this.filePath = settings.filePath;
+    this.fileName = settings.fileName;
   }
 
   async getData() {
@@ -20,7 +20,10 @@ class GoogleDrive extends ConnectionBase {
     });
 
     const jsonbody = JSON.parse(response);
-    const file = jsonbody.files.find(f => f.name === this.filePath);
+
+    console.log(JSON.stringify(jsonbody));
+
+    const file = jsonbody.files.find(f => f.name === this.fileName);
     const url = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`;
 
     return request({
