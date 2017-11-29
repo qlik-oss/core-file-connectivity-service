@@ -1,15 +1,15 @@
 # Strategies
 
-All examples are preconfigured to use an existing OAuth 2.0 application with its own clientId and clientSecret.
+All examples are preconfigured to use an existing [OAuth 2.0](https://oauth.net/2/) application with its own clientId and clientSecret.
 
 ## Dropbox
 
-Fetch data files from Dropbox is supported using OAuth 2.0 authentication flow. 
+Fetching data files from Dropbox is supported using OAuth 2.0 authentication flow. 
 The only requirement is that the file path is specified relative to the root of the Dropbox.
 
 #### Run example:
 
-- Move files in [data/](/data) to the root of your Dropbox (https://www.dropbox.com/home)
+- Move files in [data/](/data) to the root of your [Dropbox](https://www.dropbox.com/home)
 - Start QIX Engine
 - Run: node examples/dropbox.js
 - Follow the instructions in the console
@@ -17,12 +17,12 @@ The only requirement is that the file path is specified relative to the root of 
 
 ## Google Drive
 
-Download files from Googel Drive using OAuth 2.0 authentication flow. 
-The only requirement is that the file name is specified .
+Download files from Google Drive using OAuth 2.0 authentication flow. 
+The only requirement is that the file name is specified.
 
 #### Run example:
 
-- Move files in [data/](/data) to the root of you Google Drive (https://drive.google.com/drive/my-drive)
+- Move files in [data/](/data) to the root of you [Google Drive](https://drive.google.com/drive/my-drive)
 - Start QIX Engine
 - Run: node examples/googledrive.js
 - Follow the instructions in the console
@@ -30,11 +30,11 @@ The only requirement is that the file name is specified .
 ## OneDrive
 
 Download files from OneDrive using OAuth 2.0 authentication flow. 
-The only requirement is that the file name is specified .
+The only requirement is that the file name is specified.
 
 #### Run example:
 
-- Move files in [data/](/data) to the a root of Onedrive (https://onedrive.live.com/).
+- Move files in [data/](/data) to the a root of [Onedrive](https://onedrive.live.com/).
 - Start QIX Engine
 - Run: node examples/onedrive.js
 - Follow the instructions in the console
@@ -53,7 +53,7 @@ Make sure to specify the right `region` where the bucket exists.
 
 #### Run example:
 
-- Move files in [data/](/data) to the a bucket in s3 (https://console.aws.amazon.com/s3/home).
+- Move files in [data/](/data) to the a bucket in [s3](https://console.aws.amazon.com/s3/home).
 - Enter your accessKeyId, secretAccessKey, bucket, region in [/examples/s3.js](/examples/s3.js)
 - Start QIX Engine
 - Run: node examples/s3.js
