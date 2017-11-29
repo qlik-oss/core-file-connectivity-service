@@ -11,7 +11,6 @@ class GoogleDrive extends ConnectionBase {
   }
 
   async getData() {
-
     // Fetch the filelist and match that with the fileName to get file id
     const response = await request({
       url: 'https://www.googleapis.com/drive/v3/files',
