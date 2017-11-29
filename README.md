@@ -13,6 +13,8 @@ This is the workflow
 
 Another usage for the connection strategy is to preprocess the data by transforming and cleansing it, this can reduce complexity of the load script.
 
+Outhaul contains a number of predefined strategies which are documented [here](./docs/strategies.md). These strategies are also included in the docker container when building Outhaul.
+
 ### Generating the OpenAPI Specification
 
 Outhauls's REST API is specified in the [api-doc.yml](./docs/api-doc.yml) [OpenAPI](https://www.openapis.org/) document. The OpenAPI specification is generated from JSDoc by running:
