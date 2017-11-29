@@ -23,7 +23,7 @@ async function run() {
   const res = await request(url).post('/connections')
     .send({
       connector: 'OneDrive',
-      params: ['/airports.csv'],
+      params: { fileName: '/airports.csv' },
     })
     .expect(200);
 

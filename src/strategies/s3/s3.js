@@ -15,7 +15,7 @@ class S3 extends ConnectionBase {
     return false;
   }
 
-  authenticated(){
+  authenticated() {
     return !!this.accessKeyId;
   }
 

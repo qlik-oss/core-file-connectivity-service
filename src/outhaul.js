@@ -31,7 +31,7 @@ function outhaul(options) {
     if (strategy.getName) {
       strategies[strategy.getName()] = strategy;
       if (strategy.setupPassportStrategy) {
-        const callbackUrl = `http://localhost:3000${authenticationCallback}`; // Refactor!!!,
+        const callbackUrl = `http://localhost:3000/v1${authenticationCallback}`; // Refactor!!!,
         const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
         passport.use(passportStrategy);
       }
@@ -84,7 +84,6 @@ function outhaul(options) {
 
   router.get(authenticationCallback, async (ctx, next) => {
     logger.debug('callbacked');
-
     const parsedQs = qs.parse(ctx.request.querystring);
 
     const connection = getConnection(parsedQs.state);

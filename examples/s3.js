@@ -29,7 +29,9 @@ async function run() {
   const res = await request(url).post('/connections')
     .send({
       connector: 'S3',
-      params: {accessKeyId, secretAccessKey, bucketName, fileName, region},
+      params: {
+        accessKeyId, secretAccessKey, bucketName, fileName, region,
+      },
     })
     .expect(200);
 
