@@ -23,7 +23,7 @@ async function run() {
   const res = await request(url).post('/connections')
     .send({
       connector: 'Dropbox',
-      params: ['/airports.csv'],
+      params: { filePath: '/airports.csv'},
     })
     .expect(200);
 

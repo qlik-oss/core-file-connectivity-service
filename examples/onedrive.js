@@ -29,7 +29,7 @@ async function run() {
 
   logger.info('add connection done');
 
-  await request(url).get(res.text);
+  await request(url).get(res.text).expect(401);
 
   logger.info(`Authentication is needed for onedrive goto: ${url}${res.text}/authentication`);
 
