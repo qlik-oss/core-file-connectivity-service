@@ -20,9 +20,6 @@ class GoogleDrive extends ConnectionBase {
     });
 
     const jsonbody = JSON.parse(response);
-
-    console.log(JSON.stringify(jsonbody));
-
     const file = jsonbody.files.find(f => f.name === this.fileName);
     const url = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`;
 
