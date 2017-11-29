@@ -23,7 +23,7 @@ async function run() {
   const res = await request(url).post('/connections')
     .send({
       connector: 'GoogleDrive',
-      params: ['airports.csv'],
+      params: { filePath: 'airports.csv' },
     })
     .expect(200);
 
@@ -38,7 +38,7 @@ async function run() {
 
     if (authRes.statusCode === 200) {
       clearInterval(interval);
-      logger.debug(authRes.body.toString());
+      logger.info(authRes.body.toString());
     }
   }, 1000);
 }
