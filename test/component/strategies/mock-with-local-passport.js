@@ -4,9 +4,9 @@ const OAuth2Strategy = require('../../../src/oauth2-strategy');
 const ConnectionBase = require('../../../src/connection-base');
 
 class MockWithLocalPassport extends ConnectionBase {
-  constructor(strategy, returnData) {
-    super(strategy);
-    this.returnData = returnData;
+  constructor(strategy, settings) {
+    super(strategy, settings);
+    this.returnData = settings.returnData;
     this.name = 'MockWithLocalPassport';
   }
 
@@ -23,7 +23,7 @@ class MockWithLocalPassportStrategy extends OAuth2Strategy {
   }
 
   newConnector() {
-    return new MockWithLocalPassport(this, this.returnData);
+    return new MockWithLocalPassport(this, { returnData: this.returnData });
   }
 
   setupPassportStrategy(callbackUrl) {
