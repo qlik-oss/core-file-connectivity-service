@@ -23,7 +23,7 @@ async function run() {
   const res = await request(url).post('/connections')
     .send({
       connector: 'GoogleDrive',
-      params: { filePath: 'airports.csv' },
+      params: { fileName: 'airports.csv' },
     })
     .expect(200);
 
