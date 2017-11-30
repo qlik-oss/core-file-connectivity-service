@@ -263,8 +263,8 @@ function outhaul(options) {
  *         description: Name of connector
  *         type: string
  *       params:
- *         description: Parameters to pass to the connector
- *         type: array
+ *         description: Settings to pass to the connector
+ *         type: object
  */
 
 module.exports = outhaul;
