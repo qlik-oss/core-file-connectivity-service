@@ -1,0 +1,16 @@
+{
+  "port": 3000,
+  "strategies": [
+    {
+      "path": "googledrive",
+      "options": {
+        "clientId": {
+          "env": "OUTHAUL_GOOGLE_DRIVE_CLIENT_ID"
+        },
+        "clientSecret": {
+          "env": "OUTHAUL_GOOGLE_DRIVE_CLIENT_SECRET"
+        }
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 const DropboxOAuth2Strategy = require('passport-dropbox-oauth2').Strategy;
 const request = require('request');
 
-const OAuth2Strategy = require('../../oauth2-strategy');
-const ConnectionBase = require('../../connection-base');
+const OAuth2Strategy = require('../oauth2-strategy');
+const ConnectionBase = require('../connection-base');
 
 class Dropbox extends ConnectionBase {
   constructor(strategy, settings) {
@@ -22,7 +22,8 @@ class Dropbox extends ConnectionBase {
 }
 
 class DropboxStrategy extends OAuth2Strategy {
-  constructor(clientId, clientSecret) {
+  constructor(options) {
+    const { clientId, clientSecret } = options;
     super('Dropbox', DropboxOAuth2Strategy, clientId, clientSecret);
     this.connector = Dropbox;
   }

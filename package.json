@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --fix",
     "start": "node ./src/index.js",
     "test:component": "aw-test-runner ./test/component",
+    "test:unit": "aw-test-runner ./test/unit",
     "generate-openapi": "swagger-jsdoc ./src/outhaul.js -d SwaggerDef.js -o ./docs/api-doc.yml"
   },
   "devDependencies": {

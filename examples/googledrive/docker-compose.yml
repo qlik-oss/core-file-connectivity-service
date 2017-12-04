@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  outhaul:
+    build: ../../
+    volumes:
+      - ./config.json:/config/config.json
+    environment:
+      - OUTHAUL_GOOGLE_DRIVE_CLIENT_ID=811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com
+      - OUTHAUL_GOOGLE_DRIVE_CLIENT_SECRET=yi4C3WagMm4J2Ig2Vr4xYbSZ
+    command: --config=/config/config.json
+    ports:
+      - "3000:3000"

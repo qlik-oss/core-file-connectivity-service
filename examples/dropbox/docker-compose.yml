@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  outhaul:
+    build: ../../
+    volumes:
+      - ./config.json:/config/config.json
+    environment:
+      - OUTHAUL_DROPBOX_CLIENT_ID=xhf34uwq738crh5
+      - OUTHAUL_DROPBOX_CLIENT_SECRET=74vk4ym12bq205k
+    command: --config=/config/config.json
+    ports:
+      - "3000:3000"

@@ -1,0 +1,12 @@
+{
+  "complex": {
+    "structure": {
+      "key": "value",
+      "sub": {
+        "structure": {
+          "keys": ["value1", "value2"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "strategies": [
+    "GoogleDrive": {
+      "path": "asdf",
+      "clientId": {
+        "env": "OUTHAUL_GOOGLE_DRIVE_CLIENTID"
+      }
+    }
+  ]
+}
