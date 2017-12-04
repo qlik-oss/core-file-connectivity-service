@@ -12,4 +12,4 @@ RUN npm install --production --quiet
 COPY src src/
 COPY docs/api-doc.yml docs/
 
-CMD ["npm", "start", "--silent"]
+ENTRYPOINT ["node", "src/index.js"]

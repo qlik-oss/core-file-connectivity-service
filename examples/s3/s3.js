@@ -1,23 +1,6 @@
-const Outhaul = require('../src/outhaul.js');
 const request = require('supertest'); // eslint-disable-line import/no-extraneous-dependencies
 
-const S3Strategy = require('../src/strategies/s3/s3.js');
-const logger = require('../src/logger').get();
-
 async function run() {
-  const S3 = new S3Strategy();
-
-  const strategies = [
-    S3,
-  ];
-
-  const outhaul = Outhaul({
-    port: 3000,
-    strategies,
-  });
-
-  outhaul.start();
-
   const url = 'http://localhost:3000/v1';
 
   const accessKeyId = 'xxx';
@@ -37,7 +20,7 @@ async function run() {
 
   const authRes = await request(url).get(res.text);
 
-  logger.info(JSON.stringify(authRes.body.toString()));
+  console.log(JSON.stringify(authRes.body.toString()));
 }
 
 run();

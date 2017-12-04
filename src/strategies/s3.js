@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const ConnectionBase = require('../../connection-base');
+const ConnectionBase = require('../connection-base');
 
 class S3 extends ConnectionBase {
   constructor(strategy, settings) {
@@ -34,7 +34,7 @@ class S3 extends ConnectionBase {
 }
 
 class S3Strategy {
-  getName() { // eslint-disable-line
+  getName() { // eslint-disable-line class-methods-use-this
     return 'S3';
   }
 

@@ -1,0 +1,10 @@
+{
+  "port": 3000,
+  "strategies": [
+    {
+      "path": "s3",
+      "options": {
+      }
+    }
+  ]
+}

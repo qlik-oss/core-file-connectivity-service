@@ -25,24 +25,3 @@ jobs:
       - run:
           name: Build docker image
           command: docker build -t qlikea/outhaul .
-      - run:
-          name: Start container and check health
-          command: |
-            CONTAINER_ID=$(docker run -d -p 3000:3000 qlikea/outhaul)
-            echo "Outhaul container id is $CONTAINER_ID"
-
-            set +e
-            # Check that Outhaul reaches status healthy within 60 seconds
-            RETRIES=0
-
-            while [[ "$STATUS" != "healthy" && $RETRIES -le 30 ]]; do
-              STATUS=$(docker inspect -f '{{.State.Health.Status}}' "$CONTAINER_ID")
-              echo "Outhaul status is $STATUS"
-              sleep 2
-              RETRIES=$[$RETRIES+1]
-            done
-
-            if [ "$STATUS" != "healthy" ]; then
-              echo "Outhaul service did not reach status healthy"
-              exit 1
-            fi

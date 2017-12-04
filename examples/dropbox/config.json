@@ -1,0 +1,16 @@
+{
+  "port": 3000,
+  "strategies": [
+    {
+      "path": "dropbox",
+      "options": {
+        "clientId": {
+          "env": "OUTHAUL_DROPBOX_CLIENT_ID"
+        },
+        "clientSecret": {
+          "env": "OUTHAUL_DROPBOX_CLIENT_SECRET"
+        }
+      }
+    }
+  ]
+}

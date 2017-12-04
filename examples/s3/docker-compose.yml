@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  outhaul:
+    build: ../../
+    volumes:
+      - ./config.json:/config/config.json
+    command: --config=/config/config.json
+    ports:
+      - "3000:3000"
