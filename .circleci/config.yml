@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Start container and check health
           command: |
-            CONTAINER_ID=$(docker run -d -p 3000:3000 qlikea/outhaul)
+            CONTAINER_ID=$(docker run -d -p 3000:3000 qlikea/outhaul --config=config.json)
             echo "Outhaul container id is $CONTAINER_ID"
 
             set +e
