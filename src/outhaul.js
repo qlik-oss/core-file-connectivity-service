@@ -33,7 +33,10 @@ function outhaul(options) {
       if (strategy.setupPassportStrategy) {
         const callbackUrl = `http://localhost:3000/v1${authenticationCallback}`; // Refactor!!!,
         const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
-        passport.use(passportStrategy);
+
+        if (passportStrategy) {
+          passport.use(passportStrategy);
+        }
       }
     } else {
       logger.warn(`Failed to add strategy: ${strategy}`);
