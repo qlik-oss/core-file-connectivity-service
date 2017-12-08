@@ -27,6 +27,21 @@ npm run generate-openapi
 
 The connection strategy is responsible for handling authentication. Outhaul will define the required authentication HTTP endpoint needed by its connection strategies, like OAuth2. It is worth noticing that data sources that enforces OAuth2 authentication need lots of user involvement with sign in and can be hard to automate. It is recommended to use API keys instead of OAuth2 to programmatically access the data.
 
+## Run
+
+Environment variables for each connection strategy's OAuth application needs to be populated before running with clientId and clientSecret:
+
+```sh
+
+export ONE_DRIVE_CLIENT_ID="your OAuth application client id"
+export ONE_DRIVE_CLIENT_SECRET="your OAuth application client secret"
+export DROPBOX_CLIENT_ID="your OAuth application client id"
+export DROPBOX_CLIENT_SECRET="your OAuth application client secret"
+export GOOGLE_DRIVE_CLIENT_ID="your OAuth application client id"
+export GOOGLE_DRIVE_CLIENT_SECRET="your OAuth application client secret"
+npm run generate-openapi
+```
+
 ## Contributing
 
 Contributions are welcome and encouraged! See more info at [Open Source at Qlik R&D](https://github.com/qlik-oss/open-source).
