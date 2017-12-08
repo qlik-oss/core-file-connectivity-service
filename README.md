@@ -39,7 +39,7 @@ export DROPBOX_CLIENT_ID="your OAuth application client id"
 export DROPBOX_CLIENT_SECRET="your OAuth application client secret"
 export GOOGLE_DRIVE_CLIENT_ID="your OAuth application client id"
 export GOOGLE_DRIVE_CLIENT_SECRET="your OAuth application client secret"
-npm run generate-openapi
+npm start
 ```
 
 ## Contributing
