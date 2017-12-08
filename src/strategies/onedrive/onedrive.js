@@ -23,7 +23,10 @@ class OneDrive extends ConnectionBase {
 }
 
 class OneDriveStrategy extends OAuth2Strategy {
-  constructor(clientId, clientSecret) {
+  constructor() {
+    const clientId = process.env.ONE_DRIVE_CLIENT_ID;
+    const clientSecret = process.env.ONE_DRIVE_CLIENT_SECRET;
+
     const scope = ['onedrive.readwrite'];
     super('OneDrive', OneDrivePassportStrategy, clientId, clientSecret, scope);
     this.connector = OneDrive;

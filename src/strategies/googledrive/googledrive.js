@@ -34,7 +34,10 @@ class GoogleDrive extends ConnectionBase {
 }
 
 class GoogleDriveStrategy extends OAuth2Strategy {
-  constructor(clientId, clientSecret) {
+  constructor() {
+    const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET;
+
     const scope = ['profile', 'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly'];
     super('GoogleDrive', GoogleDrivePassportStrategy, clientId, clientSecret, scope);
     this.connector = GoogleDrive;

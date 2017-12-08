@@ -15,7 +15,8 @@ logger.info(`Strategies path ${strategiesFolderPath}`);
 fs.readdirSync(strategiesFolderPath).forEach((file) => {
   const fullStrategyPath = path.join(strategiesFolderPath, file, file);
   logger.info(`Using strategy ${fullStrategyPath}`);
-  strategies.push(require(fullStrategyPath)); // eslint-disable-line
+  const Strategy = require(fullStrategyPath)// eslint-disable-line
+  strategies.push(new Strategy());
 });
 
 const outhaul = Outhaul({ port: 3000, strategies });

@@ -5,10 +5,8 @@ const S3Strategy = require('../src/strategies/s3/s3.js');
 const logger = require('../src/logger').get();
 
 async function run() {
-  const S3 = new S3Strategy();
-
   const strategies = [
-    S3,
+    new S3Strategy(),
   ];
 
   const outhaul = Outhaul({

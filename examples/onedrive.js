@@ -5,10 +5,11 @@ const OneDriveStrategy = require('../src/strategies/onedrive/onedrive.js');
 const logger = require('../src/logger').get();
 
 async function run() {
-  const OneDrive = new OneDriveStrategy('59dac417-3a16-4829-beb6-024d7a649047', 'jiTGLVZ2*&lboywOB9615!]');
+  process.env.ONE_DRIVE_CLIENT_ID = '59dac417-3a16-4829-beb6-024d7a649047';
+  process.env.ONE_DRIVE_CLIENT_SECRET = 'jiTGLVZ2*&lboywOB9615!]';
 
   const strategies = [
-    OneDrive,
+    new OneDriveStrategy(),
   ];
 
   const outhaul = Outhaul({
