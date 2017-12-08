@@ -24,7 +24,7 @@ class Dropbox extends ConnectionBase {
 class DropboxStrategy extends OAuth2Strategy {
   constructor() {
     const clientId = process.env.DROPBOX_CLIENT_ID;
-    const clientSecret = process.env.DROPBOX_CLIENT_ID_CLIENT_SECRET;
+    const clientSecret = process.env.DROPBOX_CLIENT_SECRET;
 
     super('Dropbox', DropboxOAuth2Strategy, clientId, clientSecret);
     this.connector = Dropbox;
