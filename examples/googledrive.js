@@ -5,9 +5,6 @@ const GoogleDriveStrategy = require('../src/strategies/googledrive/googledrive.j
 const logger = require('../src/logger').get();
 
 async function run() {
-  process.env.GOOGLE_DRIVE_CLIENT_ID = '811557351071-2q71bjutd6fnppg24ps5nposmk42e97t.apps.googleusercontent.com';
-  process.env.GOOGLE_DRIVE_CLIENT_SECRET = 'yi4C3WagMm4J2Ig2Vr4xYbSZ';
-
   const strategies = [
     new GoogleDriveStrategy(),
   ];
