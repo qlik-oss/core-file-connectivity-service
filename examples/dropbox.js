@@ -5,9 +5,6 @@ const DropboxStrategy = require('../src/strategies/dropbox/dropbox.js');
 const logger = require('../src/logger').get();
 
 async function run() {
-  process.env.DROPBOX_CLIENT_ID = 'xhf34uwq738crh5';
-  process.env.DROPBOX_CLIENT_SECRET = '74vk4ym12bq205k';
-
   const strategies = [
     new DropboxStrategy(),
   ];
