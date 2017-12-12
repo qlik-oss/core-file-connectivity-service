@@ -1,17 +1,17 @@
 const Outhaul = require('../src/outhaul.js');
 const request = require('supertest'); // eslint-disable-line import/no-extraneous-dependencies
 
-const S3Strategy = require('../src/strategies/s3/s3.js');
+const S3Provider = require('../src/providers/s3/s3.js');
 const logger = require('../src/logger').get();
 
 async function run() {
-  const strategies = [
-    new S3Strategy(),
+  const providers = [
+    new S3Provider(),
   ];
 
   const outhaul = Outhaul({
     port: 3000,
-    strategies,
+    providers,
   });
 
   outhaul.start();

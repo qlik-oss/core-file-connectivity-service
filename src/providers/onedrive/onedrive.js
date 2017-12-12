@@ -1,13 +1,13 @@
 const OneDrivePassportStrategy = require('passport-onedrive').Strategy;
 const request = require('request-promise-native');
 
-const OAuth2Strategy = require('../../oauth2-strategy');
+const OAuth2Provider = require('../../oauth2-provider');
 const ConnectionBase = require('../../connection-base');
 const logger = require('../../logger').get();
 
 class OneDrive extends ConnectionBase {
-  constructor(strategy, settings) {
-    super(strategy, settings);
+  constructor(provider, settings) {
+    super(provider, settings);
     this.fileName = settings.fileName;
   }
 
@@ -22,7 +22,7 @@ class OneDrive extends ConnectionBase {
   }
 }
 
-class OneDriveStrategy extends OAuth2Strategy {
+class OneDriveProvider extends OAuth2Provider {
   constructor() {
     const clientId = process.env.ONE_DRIVE_CLIENT_ID;
     const clientSecret = process.env.ONE_DRIVE_CLIENT_SECRET;
@@ -37,4 +37,4 @@ class OneDriveStrategy extends OAuth2Strategy {
   }
 }
 
-module.exports = OneDriveStrategy;
+module.exports = OneDriveProvider;

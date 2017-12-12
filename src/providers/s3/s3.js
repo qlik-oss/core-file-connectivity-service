@@ -2,8 +2,8 @@ const AWS = require('aws-sdk');
 const ConnectionBase = require('../../connection-base');
 
 class S3 extends ConnectionBase {
-  constructor(strategy, settings) {
-    super(strategy, settings.accessKeyId);
+  constructor(provider, settings) {
+    super(provider, settings.accessKeyId);
     this.accessKeyId = settings.accessKeyId;
     this.secretAccessKey = settings.secretAccessKey;
     this.bucketName = settings.bucketName;
@@ -33,7 +33,7 @@ class S3 extends ConnectionBase {
   }
 }
 
-class S3Strategy {
+class S3Provider {
   getName() { // eslint-disable-line
     return 'S3';
   }
@@ -43,4 +43,4 @@ class S3Strategy {
   }
 }
 
-module.exports = S3Strategy;
+module.exports = S3Provider;

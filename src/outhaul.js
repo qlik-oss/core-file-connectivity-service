@@ -23,23 +23,23 @@ function outhaul(options) {
     port,
   } = options;
 
-  const strategies = [];
+  const providers = [];
 
   const authenticationCallback = '/oauth2/callback';
 
-  options.strategies.forEach((strategy) => {
-    if (strategy.getName) {
-      strategies[strategy.getName()] = strategy;
-      if (strategy.setupPassportStrategy) {
+  options.providers.forEach((provider) => {
+    if (provider.getName) {
+      providers[provider.getName()] = provider;
+      if (provider.setupPassportStrategy) {
         const callbackUrl = `http://localhost:3000/v1${authenticationCallback}`; // Refactor!!!,
-        const passportStrategy = strategy.setupPassportStrategy(callbackUrl);
+        const passportStrategy = provider.setupPassportStrategy(callbackUrl);
 
         if (passportStrategy) {
           passport.use(passportStrategy);
         }
       }
     } else {
-      logger.warn(`Failed to add strategy: ${strategy}`);
+      logger.warn(`Failed to add provider: ${provider}`);
     }
   });
 
@@ -192,10 +192,10 @@ function outhaul(options) {
     const input = ctx.request.body;
 
     if (input.connector) {
-      if (strategies[input.connector]) {
-        logger.debug('connector match ', strategies[input.connector]);
+      if (providers[input.connector]) {
+        logger.debug('connector match ', providers[input.connector]);
 
-        const connection = strategies[input.connector].newConnector(input.params);
+        const connection = providers[input.connector].newConnector(input.params);
 
         logger.debug('connection ', connection);
 

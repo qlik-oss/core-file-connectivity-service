@@ -1,14 +1,14 @@
 const Outhaul = require('../../src/outhaul.js');
 const request = require('supertest');
 
-const Mock = require('./strategies/mock');
-const MockWithLocalPassportStrategy = require('./strategies/mock-with-local-passport');
+const Mock = require('./providers/mock');
+const MockWithLocalPassportProvider = require('./providers/mock-with-local-passport');
 
 const returnData = 'mock data';
 
-const strategies = [
+const providers = [
   new Mock(returnData),
-  new MockWithLocalPassportStrategy(returnData, 'admin', 'password'),
+  new MockWithLocalPassportProvider(returnData, 'admin', 'password'),
 ];
 
 let outhaul;
@@ -16,7 +16,7 @@ let outhaul;
 beforeEach(() => {
   outhaul = Outhaul({
     port: 3000,
-    strategies,
+    providers,
   });
   outhaul.start();
 });
@@ -104,7 +104,7 @@ describe('outhaul', () => {
         });
     });
 
-    it.skip('should be possible to authenticate with local passport strategy', async () => {
+    it.skip('should be possible to authenticate with local passport provider', async () => {
       const res = await request(url).post('/connections')
         .send({
           connector: 'MockWithLocalPassport',

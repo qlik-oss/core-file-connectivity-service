@@ -1,17 +1,17 @@
 const Outhaul = require('../src/outhaul.js');
 const request = require('supertest'); // eslint-disable-line import/no-extraneous-dependencies
 
-const DropboxStrategy = require('../src/strategies/dropbox/dropbox.js');
+const DropboxProvider = require('../src/providers/dropbox/dropbox.js');
 const logger = require('../src/logger').get();
 
 async function run() {
-  const strategies = [
-    new DropboxStrategy(),
+  const providers = [
+    new DropboxProvider(),
   ];
 
   const outhaul = Outhaul({
     port: 3000,
-    strategies,
+    providers,
   });
 
   outhaul.start();

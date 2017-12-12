@@ -4,22 +4,22 @@ const path = require('path');
 
 const logger = require('./logger').get();
 
-const strategies = [];
+const providers = [];
 
 // TODO: Make strategies path configurable with environment variable to enable the container to mount a volume of strategies
 
-const strategiesFolderPath = path.resolve(__dirname, 'strategies');
+const providersFolderPath = path.resolve(__dirname, 'providers');
 
-logger.info(`Strategies path ${strategiesFolderPath}`);
+logger.info(`Providers path ${providersFolderPath}`);
 
-fs.readdirSync(strategiesFolderPath).forEach((file) => {
-  const fullStrategyPath = path.join(strategiesFolderPath, file, file);
-  logger.info(`Using strategy ${fullStrategyPath}`);
-  const Strategy = require(fullStrategyPath)// eslint-disable-line
-  strategies.push(new Strategy());
+fs.readdirSync(providersFolderPath).forEach((file) => {
+  const fullProviderPath = path.join(providersFolderPath, file, file);
+  logger.info(`Using strategy ${fullProviderPath}`);
+  const Provider = require(fullProviderPath)// eslint-disable-line
+  providers.push(new Provider());
 });
 
-const outhaul = Outhaul({ port: 3000, strategies });
+const outhaul = Outhaul({ port: 3000, providers });
 
 outhaul.start();
 
