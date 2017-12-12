@@ -18,7 +18,7 @@ This is the workflow
 
 Another usage for the connection provider is to preprocess the data by transforming and cleansing it, this can reduce complexity of the load script.
 
-The File-Connectivity-Service contains a few defualt providers like: Dropbox, OneDrive, GoogleDrive and S3. More example on how to use the different provides can be found [here](./docs/strategies.md). These providers are also included in the docker container when building File-Connectivity-Service.
+The File-Connectivity-Service contains a few default providers like: Dropbox, OneDrive, GoogleDrive and S3. More examples on how to use the different provides can be found [here](./docs/strategies.md). These providers are also included in the docker container when building File-Connectivity-Service.
 
 ### Generating the OpenAPI Specification
 
@@ -30,7 +30,7 @@ npm run generate-openapi
 
 ### Authentication
 
-The connection provider is responsible for handling authentication. File-Connectivity-Service will define the required authentication HTTP endpoint needed by its connection providers, like OAuth2. It is worth noticing that data sources that enforces OAuth2 authentication need lots of user involvement with sign in and can be hard to automate. It is recommended to use API keys instead of OAuth2 to programmatically access the data.
+The connection provider is responsible for handling authentication. File-Connectivity-Service will define the required authentication HTTP endpoint needed by its connection providers, like OAuth2. It is worth noticing that data sources that enforces OAuth2 authentication needs users to interact through a browser to fill in credentials like username and password and can be hard to automate. It is recommended to use API keys instead of OAuth2 to programmatically access the data.
 
 ## Run
 
