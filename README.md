@@ -47,6 +47,11 @@ export GOOGLE_DRIVE_CLIENT_SECRET="your OAuth application client secret"
 npm start
 ```
 
+## Security disclaimer
+The File-Connectivity-Service is an example implementation and not something that is production ready in regards to security.
+The communication is not encrypted with SSL and all the communication is in plain text and can be intercepted. This doesn't cause any problem if the service is running and interacting with the QIX Engine on the same host.
+It is recommended that all connection are added right before a reload and removed right after, this is crucial since the data is fully exposed while the connection is available.
+
 ## Contributing
 
 Contributions are welcome and encouraged! See more info at [Open Source at Qlik R&D](https://github.com/qlik-oss/open-source).
