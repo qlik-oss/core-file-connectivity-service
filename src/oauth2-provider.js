@@ -1,9 +1,9 @@
 const logger = require('./logger').get();
 
-class OAuth2Strategy {
-  constructor(name, strategy, clientId, clientSecret, scope) {
+class OAuth2Provider {
+  constructor(name, passportStrategy, clientId, clientSecret, scope) {
     this.name = name;
-    this.Strategy = strategy;
+    this.Strategy = passportStrategy;
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.scope = scope;
@@ -38,4 +38,4 @@ class OAuth2Strategy {
   }
 }
 
-module.exports = OAuth2Strategy;
+module.exports = OAuth2Provider;

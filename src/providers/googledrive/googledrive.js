@@ -1,12 +1,12 @@
 const GoogleDrivePassportStrategy = require('passport-google-oauth20').Strategy;
 const request = require('request-promise-native');
 
-const OAuth2Strategy = require('../../oauth2-strategy');
+const OAuth2Provider = require('../../oauth2-provider');
 const ConnectionBase = require('../../connection-base');
 
 class GoogleDrive extends ConnectionBase {
-  constructor(strategy, settings) {
-    super(strategy, settings);
+  constructor(provider, settings) {
+    super(provider, settings);
     this.fileName = settings.fileName;
   }
 
@@ -33,7 +33,7 @@ class GoogleDrive extends ConnectionBase {
   }
 }
 
-class GoogleDriveStrategy extends OAuth2Strategy {
+class GoogleDriveProvider extends OAuth2Provider {
   constructor() {
     const clientId = process.env.GOOGLE_DRIVE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET;
@@ -48,4 +48,4 @@ class GoogleDriveStrategy extends OAuth2Strategy {
   }
 }
 
-module.exports = GoogleDriveStrategy;
+module.exports = GoogleDriveProvider;

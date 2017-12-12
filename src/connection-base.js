@@ -1,9 +1,9 @@
 const uuid = require('uuid/v1');
 
 class ConnectionBase {
-  constructor(strategy, settings) {
+  constructor(provider, settings) {
     this.id = uuid();
-    this.strategy = strategy;
+    this.provider = provider;
     this.accessToken = settings.accessToken;
   }
 
@@ -20,12 +20,12 @@ class ConnectionBase {
     return this.accessToken;
   }
 
-  getStrategy() {
-    return this.strategy;
+  getProvider() {
+    return this.provider;
   }
 
   getPassportStrategyName() {
-    return this.strategy.getPassportStrategyName();
+    return this.provider.getPassportStrategyName();
   }
 }
 
