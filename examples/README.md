@@ -4,7 +4,7 @@ This example focus on how to load data from Dropbox using the file-connectivity-
 
 Start by cloning the file-connectivity-service repository with:
 - `git clone https://github.com/qlik-ea/outhaul.git`
-- `cd file-connectivit-service`
+- `cd file-connectivity-service`
 - `npm install`
 
 Copy the file [`airports.csv`](https://github.com/qlik-ea/outhaul/blob/master/data/airports.csv) located in the `/data` folder to your Dropbox.

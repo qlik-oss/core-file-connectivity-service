@@ -18,8 +18,8 @@ This is the workflow
 
 Another usage for the connection provider is to preprocess the data by transforming and cleansing it, this can reduce complexity of the load script.
 
-### Examples
-An end to end examples loading data from Dropbox can be found [here](./examples/README.md). 
+### Example
+An end to end example loading data from Dropbox can be found [here](./examples/README.md). 
 
 ### Generating the OpenAPI Specification
 
