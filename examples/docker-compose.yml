@@ -3,7 +3,7 @@ services:
 
   file-connectivity-service:
     container_name: file-connectivity-service
-    build: ../../
+    build: ../
     ports:
       - 3000:3000
     environment:
