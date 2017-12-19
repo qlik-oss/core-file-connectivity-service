@@ -6,6 +6,5 @@
     },
     "env": {
       "node": true
-    },
-    "root": true
+    }
 }
