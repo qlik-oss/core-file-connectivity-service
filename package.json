@@ -1,5 +1,6 @@
 {
-  "name": "outhaul",
+  "name": "file-connectivity-service",
+  "description": "File-Connectivity-Service is a service built to simplify accessing data sources.",
   "private": true,
   "version": "0.0.1",
   "author": "QlikTech International AB",

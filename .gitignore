@@ -11,3 +11,7 @@ coverage/
 typings/
 jsconfig.json
 jsdoc/
+npm-debug.log
+# Ignore .orig merge files (BC, KDiff3 etc.)
+*.orig
+/.npmrc

@@ -66,7 +66,7 @@ No particular editor or IDE is assumed. The repo root contains an [.editorconfig
 
 JavaScript code shall be developed according the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
 
-The [.eslintrc](./.eslintrc) file incorporates these rules with minor modifications.
+The [.eslintrc.json](./.eslintrc.json) file incorporates these rules with minor modifications.
 
 ### Linting
 
