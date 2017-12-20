@@ -18,7 +18,8 @@ This is the workflow
 
 Another usage for the connection provider is to preprocess the data by transforming and cleansing it, this can reduce complexity of the load script.
 
-The File-Connectivity-Service contains a few default providers like: Dropbox, OneDrive, GoogleDrive and S3. More examples on how to use the different provides can be found [here](./docs/strategies.md). These providers are also included in the docker container when building File-Connectivity-Service.
+### Example
+An end to end example loading data from Dropbox can be found [here](./examples/README.md). 
 
 ### Generating the OpenAPI Specification
 
