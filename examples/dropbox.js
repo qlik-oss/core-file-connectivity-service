@@ -71,12 +71,12 @@ async function e2e() {
     },
   );
 
-  const qix = await session.open();
+  const global = await session.open();
 
   const appName = 'Airports';
 
   try {
-    const app = await qix.reloadAppUsingHalyard(appName, halyard, true);
+    const app = await global.reloadAppUsingHalyard(appName, halyard, true);
     console.log(`App created and reloaded - ${appName}.qvf`);
 
     const tableData = await app.getTableData(-1, 10, true, 'Airports');
@@ -88,6 +88,8 @@ async function e2e() {
 
     // Removing data source endpoint from file-connectivity-service
     await request.delete(localhostAccessibleURL);
+
+    await session.close();
 
     process.exit(0);
   } catch (err) {
