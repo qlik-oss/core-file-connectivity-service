@@ -38,7 +38,7 @@ async function waitForAuthentication(uri) {
     }
   };
 
-  await setTimeout(pullFn, 0);
+  setTimeout(pullFn, 0);
 
   return pullPromise;
 }
