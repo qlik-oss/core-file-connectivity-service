@@ -16,22 +16,31 @@ const session = enigma.create({
   mixins: enigmaMixin,
 });
 
-// Util function that is polling endpoint until it is authenticated
-async function waitForAuthorization(uri) {
-  return new Promise((res) => {
-    // Loop until authorized
-    const interval = setInterval(async () => {
-      try {
-        await request.get(uri);
-        clearInterval(interval);
-        res();
-      } catch (err) {
-        if (err.status !== 401) {
-          throw err;
-        }
-      }
-    }, 500);
+async function waitForAuthentication(uri) {
+  let resolve;
+  let reject;
+
+  const pullPromise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
   });
+
+  const pullFn = async () => {
+    try {
+      await request.get(uri);
+      resolve();
+    } catch (err) {
+      if (err.status !== 401) {
+        reject(err);
+      } else {
+        setTimeout(pullFn, 500);
+      }
+    }
+  };
+
+  await setTimeout(pullFn, 0);
+
+  return pullPromise;
 }
 
 async function e2e() {
@@ -47,7 +56,7 @@ async function e2e() {
   // Initiate the OAuth 2.0 authentication flow
   open(`${localhostAccessibleURL}/authentication`);
 
-  await waitForAuthorization(localhostAccessibleURL);
+  await waitForAuthentication(localhostAccessibleURL);
 
   const halyard = new Halyard();
 
