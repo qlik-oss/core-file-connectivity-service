@@ -1,6 +1,6 @@
 # File-Connectivity-Service
 
-[![CircleCI](https://circleci.com/gh/qlik-ea/outhaul.svg?style=shield&circle-token=55d7bdfc4f3827e260a2e3480dbd64eab52417c0)](https://circleci.com/gh/qlik-ea/outhaul)
+[![CircleCI](https://circleci.com/gh/qlik-ea/core-file-connectivity-service.svg?style=shield&circle-token=55d7bdfc4f3827e260a2e3480dbd64eab52417c0)](https://circleci.com/gh/qlik-ea/core-file-connectivity-service)
 
 ## Overview
 File-Connectivity-Service is a service built to simplify accessing data sources. Connection providers are registered with the File-Connectivity-Service and in return a unique HTTP endpoint is defined. The unique HTTP endpoint is used to access the data source. This solution enables the QIX Engine to access a wide range of different data sources using the built in web file connectivity. Another advantage is that the connectivity providers can be hosted on a different host than the QIX Engine.
