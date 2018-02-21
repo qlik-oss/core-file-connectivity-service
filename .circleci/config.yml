@@ -26,7 +26,7 @@ jobs:
           name: Spin up docker-compose
           command: ACCEPT_EULA=yes docker-compose up -d
       - run:
-          name: Start container and check health
+          name: Check health of service
           command: |
             CONTAINER_ID=$(docker ps -aqf "name=file-connectivity-service")
             echo "Container id is $CONTAINER_ID"
