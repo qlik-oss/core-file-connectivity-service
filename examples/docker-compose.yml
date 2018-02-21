@@ -2,7 +2,6 @@ version: "3.3"
 services:
 
   file-connectivity-service:
-    container_name: file-connectivity-service
     build: ../
     ports:
       - 3000:3000
@@ -15,7 +14,7 @@ services:
       - GOOGLE_DRIVE_CLIENT_SECRET
 
   qix-engine:
-    container_name: qix-engine
-    image: qlikea/engine:12.113.0
+    image: qlikea/engine:12.139.0
+    command: -S AcceptEULA=${ACCEPT_EULA}
     ports:
       - 19076:9076
