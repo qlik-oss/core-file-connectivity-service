@@ -5,11 +5,11 @@ This example focus on how to load data from Dropbox using the file-connectivity-
 Note that before you deploy, you must accept the [Qlik Core EULA](https://qlikcore.com/beta/) by setting the `ACCEPT_EULA` environment variable.
 
 Start by cloning the file-connectivity-service repository with:
-- `git clone https://github.com/qlik-core/core-file-connectivity-service.git`
+- `git clone https://github.com/qlik-oss/core-file-connectivity-service.git`
 - `cd file-connectivity-service`
 - `npm install`
 
-Copy the file [`airports.csv`](https://github.com/qlik-core/core-file-connectivity-service/blob/master/data/airports.csv) located in the `/data` folder to your Dropbox.
+Copy the file [`airports.csv`](https://github.com/qlik-oss/core-file-connectivity-service/blob/master/data/airports.csv) located in the `/data` folder to your Dropbox.
 
 - Follow [this guide](https://www.dropbox.com/developers/reference/oauth-guide) and create a OAuth 2.0 application.
 - The `Redirect URIs` should be the address to the `http://[host]:[port]/v1/oauth2/callback` running the service, for example: `http://localhost:3000/v1/oauth2/callback`
