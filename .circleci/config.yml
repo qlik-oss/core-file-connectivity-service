@@ -23,9 +23,6 @@ jobs:
             - node_modules
       - setup_remote_docker
       - run:
-          name: Login to Docker
-          command: docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
-      - run:
           name: Spin up docker-compose
           working_directory: ~/core-file-connectivity-service/examples
           command: ACCEPT_EULA=yes docker-compose up -d
