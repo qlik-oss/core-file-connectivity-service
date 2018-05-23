@@ -9,11 +9,11 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "node ./src/index.js",
-    "test:component": "aw-test-runner ./test/component",
+    "test:component": "aw node ./test/component",
     "generate-openapi": "swagger-jsdoc ./src/outhaul.js -d SwaggerDef.js -o ./docs/api-doc.yml"
   },
   "devDependencies": {
-    "after-work.js": "3.1.5",
+    "after-work.js": "4.2.1",
     "enigma.js": "2.2.0",
     "eslint": "4.11.0",
     "eslint-config-airbnb-base": "12.1.0",
