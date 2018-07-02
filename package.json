@@ -13,7 +13,7 @@
     "generate-openapi": "swagger-jsdoc ./src/outhaul.js -d SwaggerDef.js -o ./docs/api-doc.yml"
   },
   "devDependencies": {
-    "after-work.js": "4.2.1",
+    "after-work.js": "4.3.2",
     "enigma.js": "2.2.1",
     "eslint": "4.11.0",
     "eslint-config-airbnb-base": "12.1.0",
