@@ -28,7 +28,7 @@
     "superagent": "3.8.2"
   },
   "dependencies": {
-    "aws-sdk": "2.156.0",
+    "aws-sdk": "2.266.1",
     "koa": "2.4.1",
     "koa-bodyparser": "4.2.0",
     "koa-passport": "4.0.1",
