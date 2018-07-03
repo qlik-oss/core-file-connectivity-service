@@ -1,6 +1,6 @@
-const Outhaul = require('./outhaul');
 const fs = require('fs');
 const path = require('path');
+const Outhaul = require('./outhaul');
 
 const logger = require('./logger').get();
 

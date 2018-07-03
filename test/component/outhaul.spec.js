@@ -1,5 +1,5 @@
-const Outhaul = require('../../src/outhaul.js');
 const request = require('supertest');
+const Outhaul = require('../../src/outhaul.js');
 
 const Mock = require('./providers/mock');
 const MockWithLocalPassportProvider = require('./providers/mock-with-local-passport');
