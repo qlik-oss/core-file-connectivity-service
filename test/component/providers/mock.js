@@ -4,6 +4,7 @@ class Mock {
     this.name = 'Mock';
     this.id = '1234';
   }
+
   getName() {
     return this.name;
   }
