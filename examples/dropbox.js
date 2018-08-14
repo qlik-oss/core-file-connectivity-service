@@ -1,6 +1,6 @@
 const request = require('superagent');
 const WebSocket = require('ws');
-const schema = require('enigma.js/schemas/12.20.0.json');
+const schema = require('enigma.js/schemas/12.67.2.json');
 const enigma = require('enigma.js');
 const open = require('open');
 
