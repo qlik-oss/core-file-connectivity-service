@@ -30,7 +30,7 @@
     "aws-sdk": "2.311.0",
     "koa": "2.5.2",
     "koa-bodyparser": "4.2.1",
-    "koa-passport": "4.1.0",
+    "koa-passport": "4.1.1",
     "koa-router": "7.4.0",
     "koa-session": "5.9.0",
     "passport": "0.4.0",
