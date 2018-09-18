@@ -2,7 +2,7 @@
 
 This example focus on how to load data from Dropbox using the file-connectivity-service.
 
-Note that before you deploy, you must accept the [Qlik Core EULA](https://qlikcore.com/beta/) by setting the `ACCEPT_EULA` environment variable.
+Note that before you deploy, you must accept the [Qlik Core EULA](https://core.qlik.com/eula/) by setting the `ACCEPT_EULA` environment variable.
 
 Start by cloning the file-connectivity-service repository with:
 - `git clone https://github.com/qlik-oss/core-file-connectivity-service.git`
