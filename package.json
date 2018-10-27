@@ -15,7 +15,7 @@
   "devDependencies": {
     "after-work.js": "4.3.2",
     "enigma.js": "2.3.0",
-    "eslint": "5.7.0",
+    "eslint": "5.8.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-import-resolver-node": "0.3.2",
     "eslint-plugin-import": "2.14.0",
@@ -27,8 +27,8 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "aws-sdk": "2.339.0",
-    "koa": "2.5.3",
+    "aws-sdk": "2.344.0",
+    "koa": "2.6.1",
     "koa-bodyparser": "4.2.1",
     "koa-passport": "4.1.1",
     "koa-router": "7.4.0",
