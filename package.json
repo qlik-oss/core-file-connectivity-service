@@ -24,7 +24,7 @@
     "supertest": "3.3.0",
     "swagger-jsdoc": "3.2.3",
     "ws": "6.1.2",
-    "superagent": "3.8.3"
+    "superagent": "4.0.0"
   },
   "dependencies": {
     "aws-sdk": "2.358.0",
