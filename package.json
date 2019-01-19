@@ -15,19 +15,19 @@
   "devDependencies": {
     "after-work.js": "4.3.2",
     "enigma.js": "2.4.0",
-    "eslint": "5.12.0",
+    "eslint": "5.12.1",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-import-resolver-node": "0.3.2",
     "eslint-plugin-import": "2.14.0",
     "open": "0.0.5",
     "passport-local": "1.0.0",
-    "supertest": "3.3.0",
+    "supertest": "3.4.1",
     "swagger-jsdoc": "3.2.6",
     "ws": "6.1.2",
     "superagent": "4.1.0"
   },
   "dependencies": {
-    "aws-sdk": "2.387.0",
+    "aws-sdk": "2.391.0",
     "koa": "2.6.2",
     "koa-bodyparser": "4.2.1",
     "koa-passport": "4.1.1",
