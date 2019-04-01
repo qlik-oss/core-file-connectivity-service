@@ -19,7 +19,7 @@
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-import-resolver-node": "0.3.2",
     "eslint-plugin-import": "2.16.0",
-    "open": "0.0.5",
+    "open": "6.0.0",
     "passport-local": "1.0.0",
     "supertest": "4.0.2",
     "swagger-jsdoc": "3.2.8",
