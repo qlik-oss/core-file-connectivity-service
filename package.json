@@ -19,15 +19,15 @@
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-import-resolver-node": "0.3.2",
     "eslint-plugin-import": "2.17.2",
-    "open": "6.1.0",
+    "open": "6.2.0",
     "passport-local": "1.0.0",
     "supertest": "4.0.2",
     "swagger-jsdoc": "3.2.9",
     "ws": "6.2.1",
-    "superagent": "5.0.2"
+    "superagent": "5.0.3"
   },
   "dependencies": {
-    "aws-sdk": "2.441.0",
+    "aws-sdk": "2.444.0",
     "koa": "2.7.0",
     "koa-bodyparser": "4.2.1",
     "koa-passport": "4.1.3",
