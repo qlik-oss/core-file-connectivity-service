@@ -24,10 +24,10 @@
     "supertest": "4.0.2",
     "swagger-jsdoc": "3.2.9",
     "ws": "7.0.0",
-    "superagent": "5.0.6"
+    "superagent": "5.0.9"
   },
   "dependencies": {
-    "aws-sdk": "2.471.0",
+    "aws-sdk": "2.476.0",
     "koa": "2.7.0",
     "koa-bodyparser": "4.2.1",
     "koa-passport": "4.1.3",
