@@ -52,7 +52,7 @@ async function waitForAuthentication(uri) {
     const session = enigma.create({
       schema,
       url: 'ws://localhost:19076',
-      createSocket: url => new WebSocket(url),
+      createSocket: (url) => new WebSocket(url),
     });
 
     const global = await session.open();
@@ -75,7 +75,7 @@ async function waitForAuthentication(uri) {
     console.log('Printing the first 10 rows of the Airports table:');
     // Convert table grid into a string using some functional magic.
     const tableData = await app.getTableData(-1, 10, true, 'Airports');
-    const tableDataAsString = tableData.map(row => row.qValue.map(value => value.qText).reduce((left, right) => `${left}\t${right}`)).reduce((row1, row2) => `${row1}\n${row2}`);
+    const tableDataAsString = tableData.map((row) => row.qValue.map((value) => value.qText).reduce((left, right) => `${left}\t${right}`)).reduce((row1, row2) => `${row1}\n${row2}`);
     console.log(tableDataAsString);
 
     console.log('Removing Dropbox connection from file-connectivity-service');

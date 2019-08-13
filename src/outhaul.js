@@ -53,7 +53,7 @@ function outhaul(options) {
   let appInstance;
 
   function getConnection(connectionId) {
-    return connections.find(c => c.id === connectionId);
+    return connections.find((c) => c.id === connectionId);
   }
 
   function removeConnection(connection) {

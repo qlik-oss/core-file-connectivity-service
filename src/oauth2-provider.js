@@ -14,12 +14,13 @@ class OAuth2Provider {
 
     if (this.clientId && this.clientSecret) {
       this.passportStrategy = new this.Strategy(
-        Object.assign({
+        ({
           clientID: this.clientId,
           clientSecret: this.clientSecret,
           scope: this.scope,
           callbackURL: callbackUrl,
-        }, additionalOptions),
+          ...additionalOptions,
+        }),
         (accessToken, refreshToken, profile, done) => done(undefined, accessToken, refreshToken),
       );
     } else {
