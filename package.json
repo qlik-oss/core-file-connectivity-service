@@ -18,7 +18,7 @@
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-import-resolver-node": "0.3.3",
-    "eslint-plugin-import": "2.20.0",
+    "eslint-plugin-import": "2.20.1",
     "open": "7.0.2",
     "passport-local": "1.0.0",
     "supertest": "4.0.2",
