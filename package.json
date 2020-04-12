@@ -37,7 +37,7 @@
     "passport-dropbox-oauth2": "1.1.0",
     "passport-google-oauth20": "2.0.0",
     "passport-onedrive": "0.0.4",
-    "query-string": "6.12.0",
+    "query-string": "6.12.1",
     "request": "2.88.2",
     "request-promise-native": "1.0.8",
     "uuid": "7.0.3",
