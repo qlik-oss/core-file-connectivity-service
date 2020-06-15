@@ -240,7 +240,6 @@ function outhaul(options) {
     }
   });
 
-
   function start() {
     appInstance = app.listen(port);
     return appInstance;

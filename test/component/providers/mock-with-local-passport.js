@@ -33,5 +33,4 @@ class MockWithLocalPassportStrategy extends OAuth2Provider {
   }
 }
 
-
 module.exports = MockWithLocalPassportStrategy;
